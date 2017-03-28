@@ -102,7 +102,8 @@ public class IntervalTypeTwoAHP {
         IntervalTypeTwoMF tTwo = new IntervalTypeTwoMF(tOneLower, tOneUpper);
         return tTwo;
     }
-    public ArrayList<IntervalTypeTwoMF> calcualteFuzzySyntheticExtents(){
+
+    public ArrayList<IntervalTypeTwoMF> calculateFuzzySyntheticExtents(){
 
         IntervalTypeTwoMF agMF = calculateMatrixAggregation();
         ArrayList<IntervalTypeTwoMF> fuzzyExtents = new ArrayList<IntervalTypeTwoMF>();
@@ -110,5 +111,30 @@ public class IntervalTypeTwoAHP {
             fuzzyExtents.add(calculateFuzzySytheticExtent(i, agMF));
         }
         return fuzzyExtents;
+    }
+
+    private Double[] calculateDegreeOfPossibility(IntervalTypeTwoMF first, IntervalTypeTwoMF second){
+        double firstValue = TypeOneMF.calculateHeightOfIntersection(first.getLowerMF(), second.getLowerMF());
+        double secondValue = TypeOneMF.calculateHeightOfIntersection(first.getUpperMF(), second.getUpperMF());
+
+        return new Double[]{firstValue, secondValue};
+    }
+
+    public ArrayList<ArrayList<Double[]>> calculateComparisonsOfFuzzyExtents(){
+        ArrayList<IntervalTypeTwoMF> fuzzyExtents = calculateFuzzySyntheticExtents();
+        ArrayList<ArrayList<Double[]>> degrees = new ArrayList<ArrayList<Double[]>>();
+        for (int i = 0; i < fuzzyExtents.size() ; i++) {
+            degrees.add(new ArrayList<Double[]>());
+            for (int j = 0; j < fuzzyExtents.size(); j++) {
+                if (i == j){
+                    continue;
+                }
+
+                Double[] degree = calculateDegreeOfPossibility(fuzzyExtents.get(i), fuzzyExtents.get(j));
+                degrees.get(i).add(degree);
+            }
+        }
+
+        return degrees;
     }
 }

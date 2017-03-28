@@ -26,4 +26,15 @@ public class TypeOneMF {
         this.middle = middle;
         this.upperBound = upperBound;
     }
+
+    public static double calculateHeightOfIntersection(TypeOneMF first, TypeOneMF second){
+        if(first.getMiddle() > second.getMiddle()){
+            return 1.0;
+        }
+        double firstValue = second.getLowerBound() - first.getUpperBound();
+        double secondValue = (first.getMiddle() - first.getUpperBound()) - (second.getMiddle() - second.getLowerBound());
+        System.out.println(firstValue/secondValue);
+        return firstValue/secondValue;
+    }
+
 }

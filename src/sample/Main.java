@@ -2,7 +2,9 @@ package sample;
 
 import ahp.IntervalTypeTwoAHP;
 import fuzzy.IntervalTypeTwoMF;
+import fuzzy.TypeOneMF;
 import helper.ExcelFileParser;
+import helper.IntervalArithmetic;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,9 +27,11 @@ public class Main extends Application {
 //                                        );
 //        System.out.println(myMF);
 
-        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP("path");
-        ahp.calcualteFuzzySyntheticExtents();
-
+        //IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP("path");
+        //ahp.calculateFuzzySyntheticExtents();
+        //TypeOneMF.calculateHeightOfIntersection(new TypeOneMF(0.067, 0.153,  0.306), new TypeOneMF(0.126, 0.291,  0.68));
+        //ahp.calculateComparisonsOfFuzzyExtents();
+        IntervalArithmetic.min(new double[]{1.0, 5.0}, new double[]{2.0, 6.0});
     }
 
 

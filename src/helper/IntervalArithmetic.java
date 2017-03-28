@@ -30,4 +30,60 @@ public class IntervalArithmetic {
         return result;
     }
 
+
+    public static double[] min (double[] first, double[] second){
+
+        double possibility = calculatePossibilitySecondGreater(first, second);
+        if (possibility > 0.55){
+            return first;
+        }else{
+            return second;
+        }
+    }
+
+    private static double calculatePossibilitySecondGreater(double[] first, double[] second){
+
+        if(first[1] < second[0]){
+            return 1.0;
+        }
+
+        if(first[0] > second[1]){
+            return 0.0;
+        }
+
+        if (first[0] >= second[0] && first[1] >= second[1] && first[0] <= second[1]){
+            return 0.5 * (Math.pow(second[1] - first[0], 2)/((first[1] - first[0]) * (second[1] - second[0])));
+        }
+
+        if (second[0] >= first[0] && second[1] >= first[1] && second[0] <= first[1]){
+            return 1 - 0.5 * (Math.pow(first[1] - second[0], 2)/((first[1] - first[0]) * (second[1] - second[0])));
+        }
+
+        if (first[0] >= second[0] && first[1] <= second[1]){
+            return (second[1] - first[1]) / (second[1] - second[0]) +
+                    0.5 * (first[1] - first[0])/ (second[1] - second[0]);
+        }
+
+        if (second[0] >= first[0] && second[1] <= first[1]){
+            return (second[0] - first[0]) / (first[1] - first[0]) +
+                    0.5 * (second[1] - second[0])/ (first[1] - first[0]);
+        }
+
+        if (first[0] == first[1] &&
+                second[0] != second[1] &&
+                first[0] > second[0] &&
+                first[0] < second[1]){
+            return (second[1] - first[0]) / (second[1] - second[0]);
+        }
+
+        if (first[0] != first[1] &&
+                second[0] == second[1] &&
+                second[0] > first[0] &&
+                second[0] < first[1]){
+            return (second[0] - first[1]) / (first[1] - first[0]);
+        }
+
+        return 0.0;
+
+    }
 }
