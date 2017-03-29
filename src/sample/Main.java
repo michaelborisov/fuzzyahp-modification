@@ -27,11 +27,13 @@ public class Main extends Application {
 //                                        );
 //        System.out.println(myMF);
 
-        //IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP("path");
-        //ahp.calculateFuzzySyntheticExtents();
+        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP("path");
+        ahp.calculateResultVector();
         //TypeOneMF.calculateHeightOfIntersection(new TypeOneMF(0.067, 0.153,  0.306), new TypeOneMF(0.126, 0.291,  0.68));
         //ahp.calculateComparisonsOfFuzzyExtents();
-        IntervalArithmetic.min(new double[]{1.0, 5.0}, new double[]{2.0, 6.0});
+        //IntervalArithmetic.min(new Double[]{1.0, 5.0}, new Double[]{2.0, 6.0});
+
+
     }
 
 

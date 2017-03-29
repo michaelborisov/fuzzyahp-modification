@@ -1,5 +1,6 @@
 package ahp;
 
+import fuzzy.Alternative;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
 import helper.ExcelFileParser;
@@ -7,6 +8,7 @@ import helper.IntervalArithmetic;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by michaelborisov on 26.03.17.
@@ -83,7 +85,7 @@ public class IntervalTypeTwoAHP {
         return tTwo;
     }
 
-    private IntervalTypeTwoMF calculateFuzzySytheticExtent(int rowIndex, IntervalTypeTwoMF agMF){
+    private IntervalTypeTwoMF calculateFuzzySyntheticExtent(int rowIndex, IntervalTypeTwoMF agMF){
         IntervalTypeTwoMF rowMF = calculateRowAggregation(rowIndex);
 
         double[] firstInterval = new double[]{rowMF.getUpperMF().getLowerBound(), rowMF.getLowerMF().getLowerBound()};
@@ -108,7 +110,7 @@ public class IntervalTypeTwoAHP {
         IntervalTypeTwoMF agMF = calculateMatrixAggregation();
         ArrayList<IntervalTypeTwoMF> fuzzyExtents = new ArrayList<IntervalTypeTwoMF>();
         for (int i = 0; i < this.matrix.size(); i++) {
-            fuzzyExtents.add(calculateFuzzySytheticExtent(i, agMF));
+            fuzzyExtents.add(calculateFuzzySyntheticExtent(i, agMF));
         }
         return fuzzyExtents;
     }
@@ -137,4 +139,61 @@ public class IntervalTypeTwoAHP {
 
         return degrees;
     }
+
+    public Double[] findMinFuzzyExtentInRow(ArrayList<Double[]> extents){
+        Double [] min = extents.get(0);
+        for (int i = 1; i < extents.size(); i++) {
+            min = IntervalArithmetic.min(min, extents.get(i));
+        }
+        return min;
+    }
+
+    public ArrayList<Alternative> calculateResultVector (){
+
+        ArrayList<ArrayList<Double[]>>fuzzyExtents = calculateComparisonsOfFuzzyExtents();
+        ArrayList<Double[]> result = new ArrayList<Double[]>();
+
+        double lower = 0.0;
+        double higher = 0.0;
+        for (int i = 0; i < fuzzyExtents.size(); i++) {
+            Double[] minFuzzyExtent = findMinFuzzyExtentInRow(fuzzyExtents.get(i));
+            result.add(minFuzzyExtent);
+
+            lower += minFuzzyExtent[0];
+            higher += minFuzzyExtent[1];
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            result.set(i, IntervalArithmetic.constructProperInterval(
+                    new Double[]{
+                            result.get(i)[0]/lower,
+                            result.get(i)[1]/higher
+                    })
+            );
+        }
+
+        ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
+        for (int i = 0; i <result.size(); i++) {
+            alternatives.add(new Alternative(String.valueOf(i), result.get(i)));
+        }
+        alternatives.sort(new Comparator<Alternative>() {
+            @Override
+            public int compare(Alternative o1, Alternative o2) {
+                if(IntervalArithmetic.min(o1.getInterval(), o2.getInterval()).equals(o1.getInterval())){
+                    return 1;
+                }
+                if(IntervalArithmetic.min(o1.getInterval(), o2.getInterval()).equals(o2.getInterval())){
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+
+        return alternatives;
+
+
+
+    }
+
 }

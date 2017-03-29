@@ -1,5 +1,7 @@
 package helper;
 
+import static helper.Settings.BOUNDARY_VALUE;
+
 /**
  * Created by michaelborisov on 27.03.17.
  */
@@ -30,18 +32,17 @@ public class IntervalArithmetic {
         return result;
     }
 
-
-    public static double[] min (double[] first, double[] second){
+    public static Double[] min (Double[] first, Double[] second){
 
         double possibility = calculatePossibilitySecondGreater(first, second);
-        if (possibility > 0.55){
+        if (possibility > BOUNDARY_VALUE){
             return first;
         }else{
             return second;
         }
     }
 
-    private static double calculatePossibilitySecondGreater(double[] first, double[] second){
+    private static double calculatePossibilitySecondGreater(Double[] first, Double[] second){
 
         if(first[1] < second[0]){
             return 1.0;
@@ -86,4 +87,15 @@ public class IntervalArithmetic {
         return 0.0;
 
     }
+
+    public static Double[] constructProperInterval(Double[] interval){
+        if(interval[0] > interval[1]){
+            double temp = interval[0];
+            interval[0] = interval[1];
+            interval[1] = temp;
+        }
+        return interval;
+    }
+
+
 }
