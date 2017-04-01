@@ -1,15 +1,19 @@
 package sample;
 
 import ahp.IntervalTypeTwoAHP;
+import fuzzy.Alternative;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
 import helper.ExcelFileParser;
 import helper.IntervalArithmetic;
+import helper.Settings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -20,20 +24,19 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-//        Controller.readExcel("My file");
-//        IntervalTypeTwoMF myMF = new ExcelFileParser("My File")
-//                                        .convertStringToIntervalTypeTwoMF(
-//                                                "(0.87, 0.91); 1.6; (2.23, 2.27)"
-//                                        );
-//        System.out.println(myMF);
 
-        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP("path");
-        ahp.calculateResultVector();
-        //TypeOneMF.calculateHeightOfIntersection(new TypeOneMF(0.067, 0.153,  0.306), new TypeOneMF(0.126, 0.291,  0.68));
-        //ahp.calculateComparisonsOfFuzzyExtents();
-        //IntervalArithmetic.min(new Double[]{1.0, 5.0}, new Double[]{2.0, 6.0});
-
-
+        for(double b = 0.5; b < 1; b += 0.01) {
+            Settings.BOUNDARY_VALUE = b;
+            IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(
+                    "/Users/michaelborisov/IdeaProjects/borisov.bachelor/src/sample/Books.xlsx"
+            );
+            ArrayList<Alternative> alternatives = ahp.calculateResultVector();
+            System.out.print(String.format("%.2f: ", b));
+            for (int i = 0; i < alternatives.size(); i++) {
+                System.out.print(String.format("%s ", alternatives.get(i).getName()));
+            }
+            System.out.println();
+        }
     }
 
 

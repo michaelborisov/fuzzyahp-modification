@@ -18,6 +18,10 @@ public class IntervalTypeTwoMF {
         return upperMF;
     }
 
+    public IntervalTypeTwoMF getReciprocal(){
+        return new IntervalTypeTwoMF(lowerMF.getReciprocal(), upperMF.getReciprocal());
+    }
+
     @Override
     public String toString() {
         if (lowerMF.getMiddle() == upperMF.getMiddle()) {

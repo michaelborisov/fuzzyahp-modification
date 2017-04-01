@@ -22,11 +22,9 @@ public class IntervalTypeTwoAHP {
     }
 
     public IntervalTypeTwoAHP (String pathToExcel){
-        pathToExcel = "/Users/michaelborisov/IdeaProjects/borisov.bachelor/src/sample/Books.xlsx";
         ExcelFileParser parser = new ExcelFileParser(pathToExcel);
         try {
             this.matrix = parser.parseExcel();
-            System.out.println("success");
         }catch (IOException ioEx){
             ioEx.printStackTrace();
         }
@@ -174,7 +172,7 @@ public class IntervalTypeTwoAHP {
 
         ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
         for (int i = 0; i <result.size(); i++) {
-            alternatives.add(new Alternative(String.valueOf(i), result.get(i)));
+            alternatives.add(new Alternative(String.valueOf(i + 1), result.get(i)));
         }
         alternatives.sort(new Comparator<Alternative>() {
             @Override

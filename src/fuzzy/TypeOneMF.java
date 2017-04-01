@@ -21,6 +21,10 @@ public class TypeOneMF {
     private double middle;
     private double upperBound;
 
+    public TypeOneMF getReciprocal(){
+        return new TypeOneMF(1.0 / upperBound, 1.0 / middle, 1.0 / lowerBound);
+    }
+
     public TypeOneMF(double lowerBound, double middle, double upperBound){
         this.lowerBound = lowerBound;
         this.middle = middle;
@@ -32,8 +36,8 @@ public class TypeOneMF {
             return 1.0;
         }
         double firstValue = second.getLowerBound() - first.getUpperBound();
-        double secondValue = (first.getMiddle() - first.getUpperBound()) - (second.getMiddle() - second.getLowerBound());
-        System.out.println(firstValue/secondValue);
+        double secondValue = (first.getMiddle() - first.getUpperBound()) -
+                (second.getMiddle() - second.getLowerBound());
         return firstValue/secondValue;
     }
 

@@ -47,6 +47,16 @@ public class ExcelFileParser {
 
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
+                if(j < i){
+                    try {
+                        matrix.get(i).add(matrix.get(j).get(i).getReciprocal());
+                        j++;
+                        continue;
+                    }catch (IndexOutOfBoundsException iobEx){
+                        //iobEx.printStackTrace();
+                    }
+
+                }
                 switch (cell.getCellType()) {
                     case Cell.CELL_TYPE_STRING:
                         matrix.get(i).add(convertStringToIntervalTypeTwoMF(cell.getStringCellValue()));
@@ -58,6 +68,7 @@ public class ExcelFileParser {
                     case Cell.CELL_TYPE_NUMERIC:
                         System.out.print(cell.getNumericCellValue());
                         break;
+
                 }
                 j++;
             }

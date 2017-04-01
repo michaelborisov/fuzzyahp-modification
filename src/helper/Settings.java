@@ -5,5 +5,5 @@ package helper;
  */
 public class Settings {
 
-    public static final double BOUNDARY_VALUE = 0.55;
+    public static double BOUNDARY_VALUE = 0.55;
 }
