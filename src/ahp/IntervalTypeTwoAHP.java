@@ -15,6 +15,10 @@ import java.util.Comparator;
  */
 public class IntervalTypeTwoAHP {
 
+    public ArrayList<ArrayList<IntervalTypeTwoMF>> getMatrix() {
+        return matrix;
+    }
+
     ArrayList<ArrayList<IntervalTypeTwoMF>> matrix;
 
     public IntervalTypeTwoAHP (ArrayList<ArrayList<IntervalTypeTwoMF>> matrix){

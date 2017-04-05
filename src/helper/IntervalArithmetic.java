@@ -44,12 +44,36 @@ public class IntervalArithmetic {
 
     private static double calculatePossibilitySecondGreater(Double[] first, Double[] second){
 
+        if(first[0].equals(first[1]) && second[0].equals(second[1])){
+            if (second[0] > first[0]){
+                return 1.0;
+            }
+            if (second[0] < first[0]){
+                return 0.0;
+            }
+            return 0.5;
+        }
+
         if(first[1] < second[0]){
             return 1.0;
         }
 
         if(first[0] > second[1]){
             return 0.0;
+        }
+
+        if (first[0].equals(first[1]) &&
+                !second[0].equals(second[1]) &&
+                first[0] > second[0] &&
+                first[0] < second[1]){
+            return (second[1] - first[0]) / (second[1] - second[0]);
+        }
+
+        if (!first[0].equals(first[1]) &&
+                second[0].equals(second[1]) &&
+                second[0] > first[0] &&
+                second[0] < first[1]){
+            return (second[0] - first[1]) / (first[1] - first[0]);
         }
 
         if (first[0] >= second[0] && first[1] >= second[1] && first[0] <= second[1]){
@@ -70,19 +94,7 @@ public class IntervalArithmetic {
                     0.5 * (second[1] - second[0])/ (first[1] - first[0]);
         }
 
-        if (first[0] == first[1] &&
-                second[0] != second[1] &&
-                first[0] > second[0] &&
-                first[0] < second[1]){
-            return (second[1] - first[0]) / (second[1] - second[0]);
-        }
 
-        if (first[0] != first[1] &&
-                second[0] == second[1] &&
-                second[0] > first[0] &&
-                second[0] < first[1]){
-            return (second[0] - first[1]) / (first[1] - first[0]);
-        }
 
         return 0.0;
 

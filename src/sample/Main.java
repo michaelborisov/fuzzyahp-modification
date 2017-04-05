@@ -24,18 +24,28 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
+        String[] paths = new String[]{
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_1.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_2.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_3.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_1.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_2.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_3.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_4.xlsx"
+        };
 
-        for(double b = 0.5; b < 1; b += 0.01) {
-            Settings.BOUNDARY_VALUE = b;
-            IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(
-                    "/Users/michaelborisov/IdeaProjects/borisov.bachelor/src/sample/Books.xlsx"
-            );
-            ArrayList<Alternative> alternatives = ahp.calculateResultVector();
-            System.out.print(String.format("%.2f: ", b));
-            for (int i = 0; i < alternatives.size(); i++) {
-                System.out.print(String.format("%s ", alternatives.get(i).getName()));
+        for(String path: paths) {
+            System.out.println(path);
+            for (double b = 0.5; b < 1; b += 0.01) {
+                Settings.BOUNDARY_VALUE = b;
+                IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(path);
+                ArrayList<Alternative> alternatives = ahp.calculateResultVector();
+                System.out.print(String.format("%.2f: ", b));
+                for (int i = 0; i < alternatives.size(); i++) {
+                    System.out.print(String.format("%s, ", alternatives.get(i).getName()));
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 
