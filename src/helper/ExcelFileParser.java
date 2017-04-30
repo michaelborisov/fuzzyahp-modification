@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by michaelborisov on 26.03.17.
@@ -49,7 +50,7 @@ public class ExcelFileParser {
                 Cell cell = cellIterator.next();
                 if(j < i){
                     try {
-                        matrix.get(i).add(matrix.get(j).get(i).getReciprocal());
+                        matrix.get(i).add(matrix.get(j).get(i). getReciprocal());
                         j++;
                         continue;
                     }catch (IndexOutOfBoundsException iobEx){
@@ -88,15 +89,40 @@ public class ExcelFileParser {
         String middle = parts[1].replace("(", "").replace(")", "");
         String upperBounds = parts[2].replace("(", "").replace(")", "");
 
+        double shift = 1.0;
+        Random randomGenerator = new Random();
+        int nextRand = randomGenerator.nextInt(100);
+        if (nextRand % 5 == 0) {
+            shift = 1.0;
+        }else if(nextRand % 3 == 0) {
+            shift = 1 / 1.7;
+        } else{
+            shift = 1.4;
+        }
+
+
         String[] partsLowerBounds = lowerBounds.split(",");
         Double lowerBoundUpperMF = Double.valueOf(partsLowerBounds[0]);
         Double lowerBoundLowerMF = Double.valueOf(partsLowerBounds[1]);
+
+//        Double lowerIntervalMiddle = (lowerBoundLowerMF + lowerBoundUpperMF) / 2;
+//        Double lowerInterval = (lowerBoundLowerMF - lowerBoundUpperMF) / shift / 2;
+//
+//        lowerBoundLowerMF = lowerIntervalMiddle + lowerInterval;
+//        lowerBoundUpperMF = lowerIntervalMiddle - lowerInterval;
+
 
         Double middleValue = Double.valueOf(middle);
 
         String[] partsUpperBounds = upperBounds.split(",");
         Double upperBoundUpperMF = Double.valueOf(partsUpperBounds[1]);
         Double upperBoundLowerMF = Double.valueOf(partsUpperBounds[0]);
+
+//        Double upperIntervalMiddle = (upperBoundLowerMF + upperBoundUpperMF) / 2;
+//        Double upperInterval = (upperBoundUpperMF - upperBoundLowerMF) / shift / 2;
+//
+//        upperBoundLowerMF = upperIntervalMiddle - upperInterval;
+//        upperBoundUpperMF = upperIntervalMiddle + upperInterval;
 
         TypeOneMF lowerMF = new TypeOneMF(lowerBoundLowerMF, middleValue, upperBoundLowerMF);
         TypeOneMF upperMF = new TypeOneMF(lowerBoundUpperMF, middleValue, upperBoundUpperMF);

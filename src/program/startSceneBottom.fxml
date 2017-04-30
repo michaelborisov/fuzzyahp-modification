@@ -1,7 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox fx:controller="sample.Controller"
+<HBox fx:controller="program.Controller"
         xmlns:fx="http://javafx.com/fxml" fx:id="buttonBox" alignment="BOTTOM_CENTER">
 <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 </HBox>

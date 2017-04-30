@@ -1,0 +1,14 @@
+#animated-option-button {
+    -fx-pref-width: 50px;
+    -fx-background-color: #0066FF;
+    -fx-background-radius: 50px;
+    -fx-pref-height: 50px;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 50px;
+    -fx-border-width: 4px;
+}
+
+.animated-option-sub-button{
+    -fx-background-color: #2c4557;
+}

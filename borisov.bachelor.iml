@@ -7,9 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="poi-3.15" level="project" />
-    <orderEntry type="library" name="poi-ooxml-3.15" level="project" />
-    <orderEntry type="library" name="xmlbeans-2.6.0" level="project" />
-    <orderEntry type="library" name="commons-collections4-4.1" level="project" />
+    <orderEntry type="library" exported="" name="poi-3.15" level="project" />
+    <orderEntry type="library" exported="" name="poi-ooxml-3.15" level="project" />
+    <orderEntry type="library" exported="" name="xmlbeans-2.6.0" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections4-4.1" level="project" />
+    <orderEntry type="library" exported="" name="jfoenix" level="project" />
+    <orderEntry type="library" exported="" name="richtextfx-fat-0.7-M5" level="project" />
+    <orderEntry type="library" name="gson-2.3.1" level="project" />
   </component>
 </module>
