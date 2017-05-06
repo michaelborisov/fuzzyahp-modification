@@ -1,7 +1,6 @@
-package program;
+package program.view;
 
 import classes.ProjectInfo;
-import com.google.gson.Gson;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import program.controller.StartSceneController;
 
 import java.util.ArrayList;
 
-public class Main extends Application {
+public class StartSceneView extends Application {
 
 
     @Override
@@ -22,7 +22,7 @@ public class Main extends Application {
 
 
     private void initStartScene(Stage primaryStage) throws Exception{
-        HBox root = FXMLLoader.load(getClass().getResource("startSceneBottom.fxml"));
+        HBox root = FXMLLoader.load(getClass().getResource("layout/startSceneBottom.fxml"));
         BorderPane bPane = new BorderPane();
         bPane.setBottom(root);
         bPane.setCenter(generateTasksList());
@@ -34,7 +34,8 @@ public class Main extends Application {
 
     private JFXListView<Label> generateTasksList(){
         JFXListView<Label> tasksList = new JFXListView<>();
-        ArrayList<ProjectInfo> infos = (ArrayList<ProjectInfo>) new Controller().readProjectInfos();
+        StartSceneController mController = new StartSceneController(tasksList);
+        ArrayList<ProjectInfo> infos = (ArrayList<ProjectInfo>) mController.readProjectInfos();
 
         for (ProjectInfo task: infos) {
             tasksList.getItems().add(new Label(task.getProjectTitle()));

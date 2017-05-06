@@ -1,4 +1,4 @@
-package program;
+package program.controller;
 
 import classes.ProjectInfo;
 import com.google.gson.Gson;
@@ -28,10 +28,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class StartSceneController implements Initializable {
 
     @FXML
     HBox buttonBox;
+
+    public StartSceneController(){
+
+    }
+
+    public StartSceneController(JFXListView <Label> tasksList){
+
+        tasksList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getClickCount() == 2){
+
+//                    Label currentItemSelected = tasksList.getSelectionModel().getSelectedItem();
+//                    BorderPane bPane = new BorderPane();
+//                    Stage stage = new Stage();
+//                    stage.setTitle(currentItemSelected.getText());
+//                    stage.setScene(new Scene(bPane, 700, 450));
+//                    stage.show();
+                    ProjectSceneController c = new ProjectSceneController("Project", "First Project");
+                    tasksList.getScene().getWindow().hide();
+                }
+            }
+        });
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
