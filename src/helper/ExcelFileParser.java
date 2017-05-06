@@ -105,24 +105,12 @@ public class ExcelFileParser {
         Double lowerBoundUpperMF = Double.valueOf(partsLowerBounds[0]);
         Double lowerBoundLowerMF = Double.valueOf(partsLowerBounds[1]);
 
-//        Double lowerIntervalMiddle = (lowerBoundLowerMF + lowerBoundUpperMF) / 2;
-//        Double lowerInterval = (lowerBoundLowerMF - lowerBoundUpperMF) / shift / 2;
-//
-//        lowerBoundLowerMF = lowerIntervalMiddle + lowerInterval;
-//        lowerBoundUpperMF = lowerIntervalMiddle - lowerInterval;
-
 
         Double middleValue = Double.valueOf(middle);
 
         String[] partsUpperBounds = upperBounds.split(",");
         Double upperBoundUpperMF = Double.valueOf(partsUpperBounds[1]);
         Double upperBoundLowerMF = Double.valueOf(partsUpperBounds[0]);
-
-//        Double upperIntervalMiddle = (upperBoundLowerMF + upperBoundUpperMF) / 2;
-//        Double upperInterval = (upperBoundUpperMF - upperBoundLowerMF) / shift / 2;
-//
-//        upperBoundLowerMF = upperIntervalMiddle - upperInterval;
-//        upperBoundUpperMF = upperIntervalMiddle + upperInterval;
 
         TypeOneMF lowerMF = new TypeOneMF(lowerBoundLowerMF, middleValue, upperBoundLowerMF);
         TypeOneMF upperMF = new TypeOneMF(lowerBoundUpperMF, middleValue, upperBoundUpperMF);

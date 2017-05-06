@@ -43,14 +43,7 @@ public class StartSceneController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if(event.getClickCount() == 2){
-
-//                    Label currentItemSelected = tasksList.getSelectionModel().getSelectedItem();
-//                    BorderPane bPane = new BorderPane();
-//                    Stage stage = new Stage();
-//                    stage.setTitle(currentItemSelected.getText());
-//                    stage.setScene(new Scene(bPane, 700, 450));
-//                    stage.show();
-                    ProjectSceneController c = new ProjectSceneController("Project", "First Project");
+                    new ProjectSceneController("Project", "First Project");
                     tasksList.getScene().getWindow().hide();
                 }
             }
