@@ -31,4 +31,8 @@ public abstract class BaseHierarchyEntity implements Serializable {
         return group.get();
     }
 
+    @Override
+    public String toString() {
+        return name.get();
+    }
 }
