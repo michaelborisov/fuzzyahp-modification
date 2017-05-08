@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class Assumption implements Serializable {
 
-    public Assumption(TypeOneMF confidence, TypeOneMF expectation) {
+    public Assumption(TypeOneMF expectation, TypeOneMF confidence) {
         this.confidence = confidence;
         this.expectation = expectation;
     }

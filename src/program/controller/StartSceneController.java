@@ -43,7 +43,7 @@ public class StartSceneController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if(event.getClickCount() == 2){
-                    new ProjectSceneController("Project", "First Project");
+                    new ProjectSceneController("First Project", "First Project");
                     tasksList.getScene().getWindow().hide();
                 }
             }
