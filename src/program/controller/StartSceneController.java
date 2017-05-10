@@ -42,8 +42,17 @@ public class StartSceneController implements Initializable {
         tasksList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                String selectedTitle = tasksList.getSelectionModel().getSelectedItem().getText();
+                String projectPath = "";
+                ArrayList<ProjectInfo> pInfos = (ArrayList<ProjectInfo>)readProjectInfos();
+                for (ProjectInfo pInfo: pInfos) {
+                    if(selectedTitle.equals(pInfo.getProjectTitle())){
+                        projectPath = pInfo.getProjectPath();
+                        break;
+                    }
+                }
                 if(event.getClickCount() == 2){
-                    new ProjectSceneController("First Project", "First Project");
+                    new ProjectSceneController(projectPath , selectedTitle);
                     tasksList.getScene().getWindow().hide();
                 }
             }
@@ -69,13 +78,13 @@ public class StartSceneController implements Initializable {
                 File savedFile = fChooser.showSaveDialog(addButton.getScene().getWindow());
                 String path = savedFile.getAbsolutePath();
                 saveProjectPathAndTitle(path, savedFile.getName());
-                showNewStage(savedFile.getName());
+                new ProjectSceneController(path , savedFile.getName());
                 addButton.getScene().getWindow().hide();
             }
         });
     }
 
-    private void saveProjectPathAndTitle (String projectPath, String projectTitle) {
+    public void saveProjectPathAndTitle (String projectPath, String projectTitle) {
         ProjectInfo pInfo = new ProjectInfo(projectPath, projectTitle);
         String projectInfosPath = String.format(".%s%s", File.separator, "projects.fahpm");
         List<ProjectInfo> projectInfos = readAllProjectInfos(projectInfosPath);
@@ -83,6 +92,22 @@ public class StartSceneController implements Initializable {
         Gson gson = new Gson();
         try {
             new FileWriter(projectPath);
+            FileWriter writer = new FileWriter(projectInfosPath);
+            writer.write(gson.toJson(projectInfos));
+            writer.flush();
+            writer.close();
+        }catch (IOException ioEx){
+            ioEx.printStackTrace();
+        }
+    }
+
+    public void chooseProjectPathAndTitle (String projectPath, String projectTitle) {
+        ProjectInfo pInfo = new ProjectInfo(projectPath, projectTitle);
+        String projectInfosPath = String.format(".%s%s", File.separator, "projects.fahpm");
+        List<ProjectInfo> projectInfos = readAllProjectInfos(projectInfosPath);
+        projectInfos.add(pInfo);
+        Gson gson = new Gson();
+        try {
             FileWriter writer = new FileWriter(projectInfosPath);
             writer.write(gson.toJson(projectInfos));
             writer.flush();

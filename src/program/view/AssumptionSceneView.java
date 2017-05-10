@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -18,14 +19,28 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import program.model.Assumption;
 
+import java.util.HashMap;
+
 /**
  * Created by michaelborisov on 08.05.17.
  */
 public class AssumptionSceneView extends Stage {
 
     Assumption assumption;
+
+    public String getGeneratedLabel() {
+        return generatedLabel;
+    }
+
+    public void setGeneratedLabel(String generatedLabel) {
+        this.generatedLabel = generatedLabel;
+    }
+
+    String generatedLabel;
     int row;
     int column;
+    private HashMap<JFXRadioButton, TypeOneMF> expectations = new HashMap<>();
+    private HashMap<JFXRadioButton, TypeOneMF> confidence = new HashMap<>();
 
     public AssumptionSceneView(int row, int column){
         generateRadioButtonScene();
@@ -42,22 +57,27 @@ public class AssumptionSceneView extends Stage {
         JFXRadioButton first = new JFXRadioButton("В равной степени: E1");
         first.setPadding(new Insets(10));
         first.setToggleGroup(approximGroup);
+        expectations.put(first, new TypeOneMF(1, 1, 3));
 
         JFXRadioButton second = new JFXRadioButton("Слабое преобладание: E2");
         second.setPadding(new Insets(10));
         second.setToggleGroup(approximGroup);
+        expectations.put(second, new TypeOneMF(1, 3, 5));
 
         JFXRadioButton third = new JFXRadioButton("Существенное преобладание: E3");
         third.setPadding(new Insets(10));
         third.setToggleGroup(approximGroup);
+        expectations.put(third, new TypeOneMF(3, 5, 7));
 
         JFXRadioButton fourth = new JFXRadioButton("Очень существенное преобладание: E4");
         fourth.setPadding(new Insets(10));
         fourth.setToggleGroup(approximGroup);
+        expectations.put(fourth, new TypeOneMF(5, 7 ,9));
 
         JFXRadioButton fifth = new JFXRadioButton("Крайне предпочтительнее: E5");
         fifth.setPadding(new Insets(10));
         fifth.setToggleGroup(approximGroup);
+        expectations.put(fifth, new TypeOneMF(7, 9, 9));
 
         final ToggleGroup confGroup = new ToggleGroup();
         Label approx = new Label("Оценка");
@@ -70,22 +90,27 @@ public class AssumptionSceneView extends Stage {
         JFXRadioButton confFirst = new JFXRadioButton("Совсем не уверен: C1");
         confFirst.setPadding(new Insets(10));
         confFirst.setToggleGroup(confGroup);
+        confidence.put(confFirst, new TypeOneMF(1, 1, 3));
 
         JFXRadioButton confSecond = new JFXRadioButton("Не очень уверен: C2");
         confSecond.setPadding(new Insets(10));
         confSecond.setToggleGroup(confGroup);
+        confidence.put(confSecond, new TypeOneMF(1, 3, 5));
 
         JFXRadioButton confThird = new JFXRadioButton("Уверен: C3");
         confThird.setPadding(new Insets(10));
         confThird.setToggleGroup(confGroup);
+        confidence.put(confThird, new TypeOneMF(3, 5, 7));
 
         JFXRadioButton confFourth = new JFXRadioButton("Очень уверен: C4");
         confFourth.setPadding(new Insets(10));
         confFourth.setToggleGroup(confGroup);
+        confidence.put(confFourth, new TypeOneMF(5, 7, 9));
 
         JFXRadioButton confFifth = new JFXRadioButton("Абсолютно уверен: C5");
         confFifth.setPadding(new Insets(10));
         confFifth.setToggleGroup(confGroup);
+        confidence.put(confFifth, new TypeOneMF(7, 9, 9));
 
 
         VBox vboxApp = new VBox();
@@ -117,7 +142,20 @@ public class AssumptionSceneView extends Stage {
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setAssumption(new TypeOneMF(3, 7, 10), new TypeOneMF(5, 7, 8));
+                Toggle t = approximGroup.getSelectedToggle();
+                TypeOneMF m = expectations.get(t);
+                setAssumption(
+                        expectations.get(approximGroup.getSelectedToggle()),
+                        confidence.get(confGroup.getSelectedToggle())
+
+                );
+
+                String exp = ((JFXRadioButton)approximGroup.getSelectedToggle()).getText();
+                String con = ((JFXRadioButton)confGroup.getSelectedToggle()).getText();
+                assumption.setLabel(String.format("Оценка: %s\nУверенность: %s",
+                        exp.substring(exp.length() - 2),
+                        con.substring(con.length() - 2)
+                ));
                 stage.hide();
             }
         });
@@ -127,6 +165,7 @@ public class AssumptionSceneView extends Stage {
         stage.setTitle("Экспертная оценка");
         stage.setScene(new Scene(bPane, 550, 275));
     }
+
 
     private void setAssumption(TypeOneMF expectation, TypeOneMF confidence){
 

@@ -50,7 +50,7 @@ public class ExcelFileParser {
                 Cell cell = cellIterator.next();
                 if(j < i){
                     try {
-                        matrix.get(i).add(matrix.get(j).get(i). getReciprocal());
+                        matrix.get(i).add(matrix.get(j).get(i).getReciprocal());
                         j++;
                         continue;
                     }catch (IndexOutOfBoundsException iobEx){

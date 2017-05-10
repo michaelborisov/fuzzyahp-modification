@@ -1,8 +1,12 @@
 package program.view;
 
+import ahp.IntervalTypeTwoAHP;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeView;
 import com.oracle.javafx.jmx.json.JSONReader;
+import fuzzy.Alternative;
+import fuzzy.IntervalTypeTwoMF;
+import fuzzy.TypeOneMF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -87,6 +91,8 @@ public class ProjectSceneView extends Stage {
                 depNode.getChildren().add(empLeaf);
             }
         }
+        TreeItem<String> resultNode = new TreeItem<>("Результат");
+        rootNode.getChildren().add(resultNode);
         treeView.setPrefWidth(160);
         initTreeViewClickListener(treeView);
         bPane.setLeft(treeView);
@@ -105,8 +111,27 @@ public class ProjectSceneView extends Stage {
         }
         mProject.setAlternatives(alternatives);
         mProject.setCriteria(criteria);
-//        // TODO correct
-//        mProject.setCriteriaMatrix(new Assumption[criteria.size()][criteria.size()]);
+        if(criteria.size() > mProject.getCriteriaMatrix().length) {
+            Assumption[][] newAssumption = new Assumption[criteria.size()][criteria.size()];
+            for (int i = 0; i < mProject.getCriteriaMatrix().length; i++) {
+                for (int j = 0; j < mProject.getCriteriaMatrix().length; j++) {
+                    newAssumption[i][j] = mProject.getCriteriaMatrix()[i][j];
+                }
+            }
+            mProject.setCriteriaMatrix(newAssumption);
+        }
+        if(alternatives.size() > mProject.getAlternativeMatrices().get(0).length) {
+            for(int k = 0; k < mProject.getAlternativeMatrices().size(); k ++) {
+                Assumption[][] newAssumption = new Assumption[alternatives.size()][alternatives.size()];
+                for (int i = 0; i < mProject.getAlternativeMatrices().get(k).length; i++) {
+                    for (int j = 0; j < mProject.getAlternativeMatrices().get(k)[i].length; j++) {
+                        newAssumption[i][j] = mProject.getAlternativeMatrices().get(k)[i][j];
+                    }
+                }
+                mProject.getAlternativeMatrices().set(k, newAssumption);
+            }
+        }
+
         mController.saveProjectToFile();
     }
 
@@ -119,84 +144,42 @@ public class ProjectSceneView extends Stage {
                 if(event.getButton() == MouseButton.PRIMARY){
 
                     if (selectedItem.getValue().equals("Критерии")) {
-                        ScrollPane sPane = new ScrollPane();
-                        GridPane gridpane = new GridPane();
-                        sPane.setContent(gridpane);
-                        for (int i = 0; i < mProject.getCriteria().size() + 1; i++) {
-                            RowConstraints row = new RowConstraints(50);
-                            gridpane.getRowConstraints().add(row);
+                        initCriteriaScene();
+                    }
+                    if(selectedItem.getParent().getValue().equals("Критерии")){
+                        int ind = mProject.getCriteria().indexOf(selectedItem.getValue());
+                        if(ind >= 0){
+                            initSpecificCriterionScene(ind);
+                        }else {
+                            initSpecificCriterionScene(0);
                         }
-                        for (int i = 0; i < mProject.getCriteria().size() + 1; i++) {
-                            for (int j = 0; j < mProject.getCriteria().size() + 1; j++) {
-                                if (i == 0 && j == 0) {
-                                    Label mButton = new Label("Цель");
-                                    mButton.setPadding(new Insets(5, 5, 5, 5));
-                                    GridPane.setHalignment(mButton, HPos.CENTER);
-                                    gridpane.add(mButton, i, j);
-                                    continue;
-                                }
-                                if (i == 0 || j == 0) {
-                                    Label mButton = new Label(mProject.getCriteria().get(Math.max(i - 1,j - 1)));
-                                    mButton.setPadding(new Insets(5, 5, 5, 5));
-                                    GridPane.setHalignment(mButton, HPos.CENTER);
-                                    gridpane.add(mButton, i, j);
-                                    continue;
-
-                                }
-                                if (i == j) {
-                                    continue;
-                                }
-                                JFXButton mButton = new JFXButton("Оценка ?" + "\n" + "Уверенность ?");
-                                mButton.setWrapText(true);
-                                mButton.setButtonType(JFXButton.ButtonType.RAISED);
-
-                                if(mProject.getCriteriaMatrix()[j-1][i-1] != null){
-                                    mButton.setStyle(matrixCellButtonStyle);
-                                }
-                                mButton.setAlignment(Pos.CENTER);
-                                mButton.setPadding(new Insets(0, 0, 0, 5));
-                                mButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                    @Override
-                                    public void handle(MouseEvent event) {
-                                        AssumptionSceneView mAssumptionView = new AssumptionSceneView(
-                                                GridPane.getRowIndex(mButton),
-                                                GridPane.getColumnIndex(mButton)
+                    }
+                    if (selectedItem.getValue().equals("Результат")){
+                        ArrayList<ArrayList<IntervalTypeTwoMF>> matrix = new ArrayList<ArrayList<IntervalTypeTwoMF>>();
+                        for (int i = 0; i <mProject.getCriteriaMatrix().length; i++) {
+                            matrix.add(new ArrayList<>());
+                            for (int j = 0; j < mProject.getCriteriaMatrix()[i].length; j++) {
+                                if(j < i){
+                                    matrix.get(i).add(matrix.get(j).get(i).getReciprocal());
+                                }else{
+                                    if(mProject.getCriteriaMatrix()[i][j] == null) {
+                                        matrix.get(i).add(
+                                                new IntervalTypeTwoMF(
+                                                        new TypeOneMF(1, 1, 1),
+                                                        new TypeOneMF(1, 1, 1)
+                                                )
                                         );
-
-                                        mAssumptionView.setOnHidden(new EventHandler<WindowEvent>() {
-                                            @Override
-                                            public void handle(WindowEvent event) {
-
-                                                Assumption mAssumption = mAssumptionView.getAssumption();
-                                                mProject.getCriteriaMatrix()[GridPane.getRowIndex(mButton) - 1]
-                                                        [GridPane.getColumnIndex(mButton) - 1] = mAssumption;
-                                                mController.saveProjectToFile();
-
-                                            }
-                                        });
-                                        mAssumptionView.showAndWait();
+                                    }else{
+                                        matrix.get(i).add(mProject.getCriteriaMatrix()[i][j].convertT1MFtoIT2MF());
                                     }
-                                });
-                                if(j>i){
-                                    mButton.disableProperty().setValue(Boolean.TRUE);
                                 }
-                                GridPane.setHalignment(mButton, HPos.CENTER);
-                                gridpane.add(mButton, i, j);
                             }
                         }
-                        gridpane.setGridLinesVisible(true);
-                        gridpane.setPadding(new Insets(5));
-                        gridpane.setAlignment(Pos.TOP_CENTER);
-
-
-                        TextArea tArea = new TextArea();
-                        tArea.setText("Комментарий ...");
-                        tArea.setPadding(new Insets(5));
-
-                        VBox vBox = new VBox();
-                        vBox.setSpacing(10);
-                        vBox.getChildren().addAll(sPane, tArea);
-                        bPane.setCenter(vBox);
+                        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(matrix);
+                        ArrayList<Alternative> alternatives = ahp.calculateResultVector();
+                        for (int i = 0; i < alternatives.size(); i++) {
+                            System.out.print(String.format("%s, ", alternatives.get(i).getName()));
+                        }
                     }
                 }
                 if(event.getButton() == MouseButton.SECONDARY){
@@ -211,6 +194,183 @@ public class ProjectSceneView extends Stage {
         });
     }
 
+
+    private void initCriteriaScene(){
+        ScrollPane sPane = new ScrollPane();
+        GridPane gridpane = new GridPane();
+        sPane.setContent(gridpane);
+        for (int i = 0; i < mProject.getCriteria().size() + 1; i++) {
+            RowConstraints row = new RowConstraints(50);
+            gridpane.getRowConstraints().add(row);
+        }
+        for (int i = 0; i < mProject.getCriteria().size() + 1; i++) {
+            for (int j = 0; j < mProject.getCriteria().size() + 1; j++) {
+                if (i == 0 && j == 0) {
+                    Label mButton = new Label("Цель");
+                    mButton.setPadding(new Insets(5, 5, 5, 5));
+                    GridPane.setHalignment(mButton, HPos.CENTER);
+                    gridpane.add(mButton, i, j);
+                    continue;
+                }
+                if (i == 0 || j == 0) {
+                    Label mButton = new Label(mProject.getCriteria().get(Math.max(i - 1,j - 1)));
+                    mButton.setPadding(new Insets(5, 5, 5, 5));
+                    GridPane.setHalignment(mButton, HPos.CENTER);
+                    gridpane.add(mButton, i, j);
+                    continue;
+
+                }
+                if (i == j) {
+                    continue;
+                }
+                JFXButton mButton = new JFXButton("Оценка ?" + "\n" + "Уверенность ?");
+                mButton.setWrapText(true);
+                mButton.setButtonType(JFXButton.ButtonType.RAISED);
+
+                if(mProject.getCriteriaMatrix()[j-1][i-1] != null){
+                    mButton.setStyle(matrixCellButtonStyle);
+                    mButton.setText(mProject.getCriteriaMatrix()[j-1][i-1].getLabel());
+
+                }
+                mButton.setAlignment(Pos.CENTER);
+                mButton.setPadding(new Insets(0, 0, 0, 5));
+                mButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        AssumptionSceneView mAssumptionView = new AssumptionSceneView(
+                                GridPane.getRowIndex(mButton),
+                                GridPane.getColumnIndex(mButton)
+                        );
+
+                        mAssumptionView.setOnHidden(new EventHandler<WindowEvent>() {
+                            @Override
+                            public void handle(WindowEvent event) {
+
+                                Assumption mAssumption = mAssumptionView.getAssumption();
+                                mProject.getCriteriaMatrix()[GridPane.getRowIndex(mButton) - 1]
+                                        [GridPane.getColumnIndex(mButton) - 1] = mAssumption;
+                                mController.saveProjectToFile();
+                                //mButton.setText(mAssumptionView.getGeneratedLabel());
+                                initCriteriaScene();
+
+                            }
+                        });
+                        mAssumptionView.showAndWait();
+                    }
+                });
+                if(j>i){
+                    mButton.disableProperty().setValue(Boolean.TRUE);
+                }
+                GridPane.setHalignment(mButton, HPos.CENTER);
+                gridpane.add(mButton, i, j);
+            }
+        }
+        gridpane.setGridLinesVisible(true);
+        gridpane.setPadding(new Insets(5, 5, 5, 50));
+
+        TextArea tArea = new TextArea();
+        tArea.setText("Комментарий ...");
+        tArea.setPadding(new Insets(5));
+
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.getChildren().addAll(sPane, tArea);
+        bPane.setCenter(vBox);
+    }
+
+    private void initSpecificCriterionScene(int criteriaIndex){
+        GridPane gridpane = new GridPane();
+        ScrollPane sPane = new ScrollPane();
+        sPane.setContent(gridpane);
+        for (int i = 0; i < mProject.getAlternatives().size() + 1; i++) {
+            RowConstraints row = new RowConstraints(50);
+            gridpane.getRowConstraints().add(row);
+        }
+        for (int i = 0; i < mProject.getAlternatives().size() + 1; i++) {
+            for (int j = 0; j < mProject.getAlternatives().size() + 1; j++) {
+                if (i == 0 && j == 0) {
+                    Label mButton = new Label(mProject.getCriteria().get(criteriaIndex));
+                    mButton.setPadding(new Insets(5, 5, 5, 5));
+                    GridPane.setHalignment(mButton, HPos.CENTER);
+                    gridpane.add(mButton, i, j);
+                    continue;
+                }
+                if (i == 0) {
+                    Label mButton = new Label(mProject.getAlternatives().get(j - 1));
+                    mButton.setPadding(new Insets(5, 5, 5, 5));
+                    GridPane.setHalignment(mButton, HPos.CENTER);
+                    gridpane.add(mButton, i, j);
+                    continue;
+
+                }
+                if (j == 0) {
+                    Label mButton = new Label(mProject.getAlternatives().get(i - 1));
+                    mButton.setPadding(new Insets(5, 5, 5, 5));
+                    GridPane.setHalignment(mButton, HPos.CENTER);
+                    gridpane.add(mButton, i, j);
+                    continue;
+                }
+                if (i == j) {
+                    continue;
+                }
+                JFXButton mButton = new JFXButton("Оценка ?" + "\n" + "Уверенность ?");
+                mButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        AssumptionSceneView mAssumptionView = new AssumptionSceneView(
+                                GridPane.getRowIndex(mButton),
+                                GridPane.getColumnIndex(mButton)
+                        );
+
+                        mAssumptionView.setOnHidden(new EventHandler<WindowEvent>() {
+                            @Override
+                            public void handle(WindowEvent event) {
+
+                                Assumption mAssumption = mAssumptionView.getAssumption();
+
+                                mProject.getAlternativeMatrices().get(criteriaIndex)[GridPane.getRowIndex(mButton) - 1]
+                                        [GridPane.getColumnIndex(mButton) - 1] = mAssumption;
+
+                                mController.saveProjectToFile();
+                                initSpecificCriterionScene(criteriaIndex);
+                            }
+                        });
+                        mAssumptionView.showAndWait();
+                    }
+                });
+                try {
+                    if (mProject.getAlternativeMatrices().get(criteriaIndex)[j - 1][i - 1] != null) {
+                        mButton.setStyle(matrixCellButtonStyle);
+                        mButton.setText(mProject.getAlternativeMatrices().get(criteriaIndex)[j - 1][i - 1].getLabel());
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                mButton.setWrapText(true);
+                mButton.setButtonType(JFXButton.ButtonType.RAISED);
+                //mButton.setStyle(matrixCellButtonStyle);
+                mButton.setAlignment(Pos.CENTER);
+                mButton.setPadding(new Insets(0, 0, 0, 5));
+                if(j>i){
+                    mButton.disableProperty().setValue(Boolean.TRUE);
+                }
+                GridPane.setHalignment(mButton, HPos.CENTER);
+                gridpane.add(mButton, i, j);
+            }
+        }
+        gridpane.setGridLinesVisible(true);
+        gridpane.setPadding(new Insets(5, 5, 5, 50));
+
+        TextArea tArea = new TextArea();
+        tArea.setText("Комментарий ...");
+        tArea.setPadding(new Insets(5));
+
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.getChildren().addAll(sPane, tArea);
+        bPane.setCenter(vBox);
+    }
+
     private void addMenuItemClick(TreeItem<String> selectedItem,
                                   ContextMenu cm,
                                   JFXTreeView<String> treeView,
@@ -220,13 +380,27 @@ public class ProjectSceneView extends Stage {
         cmItem1.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
 
+                TextInputDialog dialog = new TextInputDialog(selectedItem.getValue());
+                dialog.setTitle("Добавлени");
+                if(selectedItem.getValue().equals("Критерии")) {
+                    dialog.setHeaderText("Добавьте критерий");
+                }else{
+                    dialog.setHeaderText("Добавьте альтернативу");
+                }
+                dialog.setContentText("Пожалуйста, введите название");
+                Optional<String> result = dialog.showAndWait();
+
+
                 if (selectedItem.getValue().equals("Критерии")) {
-                    entities.add(new CriteriaHierarchyEntity("Критерий_2"));
+                    entities.add(new CriteriaHierarchyEntity(result.get()));
                 }
                 if (selectedItem.getValue().equals("Альтернативы")) {
-                    entities.add(new AlternativeHierarchyEntity("Альтернатива_2"));
+                    entities.add(new AlternativeHierarchyEntity(result.get()));
                 }
                 initLeftSideTreeView();
+                if(selectedItem.getValue().equals("Критерии")) {
+                    initCriteriaScene();
+                }
             }
         });
         cm.getItems().add(cmItem1);
@@ -269,6 +443,10 @@ public class ProjectSceneView extends Stage {
                         entities.remove(toDelete);
                     }
                     initLeftSideTreeView();
+
+                    if(selectedItem.getParent().getValue().equals("Критерии")) {
+                        initCriteriaScene();
+                    }
                 }
             }
         });
@@ -289,10 +467,15 @@ public class ProjectSceneView extends Stage {
                     String w = toDelete.getName();
                     int e = q.indexOf(w);
                     int indexToDelete = mProject.getCriteria().indexOf(toDelete.getName());
-                    modifyCriteriaMatrix(indexToDelete);
+                    if(selectedItem.getParent().getValue().equals("Критерии")) {
+                        modifyCriteriaMatrix(indexToDelete);
+                    }
                     entities.remove(toDelete);
                 }
                 initLeftSideTreeView();
+                if(selectedItem.getParent().getValue().equals("Критерии")) {
+                    initCriteriaScene();
+                }
             }
         });
         cm.getItems().addAll(cmItem2, cmItem3);
@@ -305,20 +488,20 @@ public class ProjectSceneView extends Stage {
 
         int p = 0;
         for (int i = 0; i < givenMatrix.length; i++) {
-            if ( i == indexToDelete)
+            if ( i == indexToDelete){
                 continue;
+            }
             int q = 0;
             for (int j = 0; j < givenMatrix[i].length; j++) {
-                if ( j == indexToDelete)
+                if ( j == indexToDelete) {
                     continue;
-
-
+                }
                     newMatrix[p][q] = givenMatrix[i][j];
                     q++;
             }
             p++;
         }
-        
+
         mProject.setCriteriaMatrix(newMatrix);
     }
     private static String matrixCellButtonStyle =
