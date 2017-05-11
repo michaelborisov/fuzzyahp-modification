@@ -66,9 +66,11 @@ public class StartSceneView extends Application {
             public void handle(ActionEvent event) {
                 FileChooser fChooser = new FileChooser();
                 File chosen = fChooser.showOpenDialog(menuBar.getScene().getWindow());
-                mController.chooseProjectPathAndTitle(chosen.getAbsolutePath(), chosen.getName());
-                new ProjectSceneController(chosen.getAbsolutePath() , chosen.getName());
-                menuBar.getScene().getWindow().hide();
+                if(chosen != null) {
+                    mController.chooseProjectPathAndTitle(chosen.getAbsolutePath(), chosen.getName());
+                    new ProjectSceneController(chosen.getAbsolutePath(), chosen.getName());
+                    menuBar.getScene().getWindow().hide();
+                }
             }
         });
         menuFile.getItems().add(open);

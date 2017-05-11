@@ -150,6 +150,54 @@ public class IntervalTypeTwoAHP {
         return min;
     }
 
+    public ArrayList<Double[]> calculateIntervalVector(){
+        ArrayList<ArrayList<Double[]>>fuzzyExtents = calculateComparisonsOfFuzzyExtents();
+        ArrayList<Double[]> result = new ArrayList<Double[]>();
+
+        double lower = 0.0;
+        double higher = 0.0;
+        for (int i = 0; i < fuzzyExtents.size(); i++) {
+            Double[] minFuzzyExtent = findMinFuzzyExtentInRow(fuzzyExtents.get(i));
+            result.add(minFuzzyExtent);
+            lower += minFuzzyExtent[0];
+            higher += minFuzzyExtent[1];
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            result.set(
+                    i,
+                    new Double[]{
+                            Math.min(result.get(i)[0]/lower,result.get(i)[1]/higher),
+                            Math.max(result.get(i)[0]/lower,result.get(i)[1]/higher)
+                    }
+            );
+        }
+        return result;
+    }
+
+    public ArrayList<Double[]> normalizeVector(ArrayList<Double[]> vector){
+        ArrayList<Double[]> result = new ArrayList<Double[]>();
+
+        double lower = 0.0;
+        double higher = 0.0;
+        for (int i = 0; i < vector.size(); i++) {
+            result.add(new Double[2]);
+            lower += vector.get(i)[0];
+            higher += vector.get(i)[1];
+        }
+
+        for (int i = 0; i < vector.size(); i++) {
+            result.set(
+                    i,
+                    new Double[]{
+                            Math.min(vector.get(i)[0]/lower,vector.get(i)[1]/higher),
+                            Math.max(vector.get(i)[0]/lower,vector.get(i)[1]/higher)
+                    }
+            );
+        }
+        return result;
+    }
+
     public ArrayList<Alternative> calculateResultVector (){
 
         ArrayList<ArrayList<Double[]>>fuzzyExtents = calculateComparisonsOfFuzzyExtents();

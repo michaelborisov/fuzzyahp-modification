@@ -13,17 +13,17 @@ public class IntervalArithmetic {
         }
 
         double lowerBound = Math.min(
-                first[1]/ second[1], Math.min(
-                        first[1]/ second[0], Math.min(
-                                first[0]/second[0], first[0]/ second[1]
+                first[1] / second[1], Math.min(
+                        first[1] / second[0], Math.min(
+                                first[0] / second[0], first[0] / second[1]
                         )
                 )
         );
 
         double upperBound = Math.max(
-                first[1]/ second[1], Math.max(
-                        first[1]/ second[0], Math.max(
-                                first[0]/second[0], first[0]/ second[1]
+                first[1] / second[1], Math.max(
+                        first[1] / second[0], Math.max(
+                                first[0] / second[0], first[0] / second[1]
                         )
                 )
         );
@@ -32,6 +32,39 @@ public class IntervalArithmetic {
         return result;
     }
 
+    public static Double[] multiply(Double[]first, Double[] second){
+        if(first.length > 2 || second.length > 2){
+            throw new IllegalArgumentException();
+        }
+
+        double lowerBound = Math.min(
+                first[1] * second[1], Math.min(
+                        first[1] * second[0], Math.min(
+                                first[0] * second[0], first[0] * second[1]
+                        )
+                )
+        );
+
+        double upperBound = Math.max(
+                first[1] * second[1], Math.max(
+                        first[1] * second[0], Math.max(
+                                first[0] * second[0], first[0] * second[1]
+                        )
+                )
+        );
+
+        Double[] result = new Double[]{lowerBound, upperBound};
+        return result;
+    }
+
+
+    public static Double[] sum(Double[]first, Double[] second){
+        if(first.length > 2 || second.length > 2){
+            throw new IllegalArgumentException();
+        }
+        Double[] result = new Double[]{first[0] + second[0], first[1] + second[1]};
+        return result;
+    }
     public static Double[] min (Double[] first, Double[] second){
 
         double possibility = calculatePossibilitySecondGreater(first, second);
@@ -108,6 +141,5 @@ public class IntervalArithmetic {
         }
         return interval;
     }
-
 
 }

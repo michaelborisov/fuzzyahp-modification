@@ -7,6 +7,7 @@ import com.oracle.javafx.jmx.json.JSONReader;
 import fuzzy.Alternative;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
+import helper.IntervalArithmetic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -15,6 +16,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -120,6 +125,9 @@ public class ProjectSceneView extends Stage {
             }
             mProject.setCriteriaMatrix(newAssumption);
         }
+        if(criteria.size() > mProject.getAlternativeMatrices().size()){
+            mProject.getAlternativeMatrices().add(new Assumption[alternatives.size()][alternatives.size()]);
+        }
         if(alternatives.size() > mProject.getAlternativeMatrices().get(0).length) {
             for(int k = 0; k < mProject.getAlternativeMatrices().size(); k ++) {
                 Assumption[][] newAssumption = new Assumption[alternatives.size()][alternatives.size()];
@@ -155,31 +163,96 @@ public class ProjectSceneView extends Stage {
                         }
                     }
                     if (selectedItem.getValue().equals("Результат")){
-                        ArrayList<ArrayList<IntervalTypeTwoMF>> matrix = new ArrayList<ArrayList<IntervalTypeTwoMF>>();
+                        ArrayList<ArrayList<IntervalTypeTwoMF>> criteriaMatrix = new ArrayList<ArrayList<IntervalTypeTwoMF>>();
                         for (int i = 0; i <mProject.getCriteriaMatrix().length; i++) {
-                            matrix.add(new ArrayList<>());
+                            criteriaMatrix.add(new ArrayList<>());
                             for (int j = 0; j < mProject.getCriteriaMatrix()[i].length; j++) {
                                 if(j < i){
-                                    matrix.get(i).add(matrix.get(j).get(i).getReciprocal());
+                                    criteriaMatrix.get(i).add(criteriaMatrix.get(j).get(i).getReciprocal());
                                 }else{
                                     if(mProject.getCriteriaMatrix()[i][j] == null) {
-                                        matrix.get(i).add(
+                                        criteriaMatrix.get(i).add(
                                                 new IntervalTypeTwoMF(
                                                         new TypeOneMF(1, 1, 1),
                                                         new TypeOneMF(1, 1, 1)
                                                 )
                                         );
                                     }else{
-                                        matrix.get(i).add(mProject.getCriteriaMatrix()[i][j].convertT1MFtoIT2MF());
+                                        criteriaMatrix.get(i).add(mProject.getCriteriaMatrix()[i][j].convertT1MFtoIT2MF());
+                                    }
+                                }
+                            }
+
+                        }
+                        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(criteriaMatrix);
+                        ArrayList<Double[]> criteriaVector = ahp.calculateIntervalVector();
+
+                        ArrayList<ArrayList<ArrayList<IntervalTypeTwoMF>>> alternativeMatricesList = new ArrayList<ArrayList<ArrayList<IntervalTypeTwoMF>>>();
+                        for (int k = 0; k < mProject.getAlternativeMatrices().size(); k++) {
+                            alternativeMatricesList.add(new ArrayList<>());
+                            for (int i = 0; i < mProject.getAlternativeMatrices().get(k).length; i++) {
+                                alternativeMatricesList.get(k).add(new ArrayList<>());
+                                for (int j = 0; j < mProject.getAlternativeMatrices().get(k)[i].length; j++) {
+                                    if(j < i){
+                                        alternativeMatricesList.get(k).get(i).add(
+                                                alternativeMatricesList.get(k).get(j).get(i).getReciprocal()
+                                        );
+                                    }else{
+                                        if(mProject.getAlternativeMatrices().get(k)[i][j] == null) {
+                                            alternativeMatricesList.get(k).get(i).add(
+                                                    new IntervalTypeTwoMF(
+                                                            new TypeOneMF(1, 1, 1),
+                                                            new TypeOneMF(1, 1, 1)
+                                                    )
+                                            );
+                                        }else{
+                                            alternativeMatricesList.get(k).get(i).add(
+                                                    mProject.getAlternativeMatrices().get(k)[i][j].convertT1MFtoIT2MF()
+                                            );
+                                        }
                                     }
                                 }
                             }
                         }
-                        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(matrix);
-                        ArrayList<Alternative> alternatives = ahp.calculateResultVector();
-                        for (int i = 0; i < alternatives.size(); i++) {
-                            System.out.print(String.format("%s, ", alternatives.get(i).getName()));
+                        ArrayList<ArrayList<Double[]>> alternativeVectors = new ArrayList<ArrayList<Double[]>>();
+                        for (ArrayList<ArrayList<IntervalTypeTwoMF>> alternativeMatrix: alternativeMatricesList) {
+                            ahp = new IntervalTypeTwoAHP(alternativeMatrix);
+                            alternativeVectors.add(ahp.calculateIntervalVector());
                         }
+
+                        ArrayList<Double[]> totalResultVector = new ArrayList<Double[]>();
+                        for (int i = 0; i < alternativeVectors.size(); i++) {
+                            Double[] rowSum = new Double[]{0.0, 0.0};
+                            for (int j = 0; j < alternativeVectors.get(i).size(); j++) {
+                                rowSum = IntervalArithmetic.sum(rowSum,
+                                        IntervalArithmetic.multiply(
+                                                alternativeVectors.get(i).get(j),
+                                                criteriaVector.get(j)
+                                        )
+                                );
+                            }
+                            totalResultVector.add(rowSum);
+                        }
+                        totalResultVector = ahp.normalizeVector(totalResultVector);
+                        ArrayList<Double> crispValues = new ArrayList<Double>();
+                        for (int i = 0; i < totalResultVector.size(); i++) {
+                            crispValues.add((totalResultVector.get(i)[0] + totalResultVector.get(i)[1])/2.0);
+                        }
+                        final CategoryAxis xAxis = new CategoryAxis();
+                        final NumberAxis yAxis = new NumberAxis();
+                        final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
+                        bc.setTitle("Результат");
+                        xAxis.setLabel("Альтернативы");
+                        yAxis.setLabel("Предпочтение в процентах");
+
+                        XYChart.Series series1 = new XYChart.Series();
+                        series1.setName("Приоритеты");
+                        for (int i = 0; i < crispValues.size(); i++) {
+                            series1.getData().add(new XYChart.Data(mProject.getAlternatives().get(i), crispValues.get(i)*100));
+                        }
+                        bc.getData().addAll(series1);
+                        bPane.setCenter(bc);
+                        System.out.println(alternativeVectors);
                     }
                 }
                 if(event.getButton() == MouseButton.SECONDARY){
@@ -345,6 +418,7 @@ public class ProjectSceneView extends Stage {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    updateAlternativesAndCriteriaProjectLists();
                 }
                 mButton.setWrapText(true);
                 mButton.setButtonType(JFXButton.ButtonType.RAISED);

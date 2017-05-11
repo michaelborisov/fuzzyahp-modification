@@ -126,6 +126,9 @@ public class StartSceneController implements Initializable {
                         new FileReader(projectInfosPath),
                         new ArrayList<ProjectInfo>().getClass()
                 );
+                if(projects == null){
+                    projects = new ArrayList<>();
+                }
                 for (int i = 0; i < projects.size(); i++) {
                     projectInfos.add(new ProjectInfo(
                             projects.get(i).get("projectPath"),

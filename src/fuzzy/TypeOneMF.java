@@ -38,7 +38,12 @@ public class TypeOneMF {
         double firstValue = second.getLowerBound() - first.getUpperBound();
         double secondValue = (first.getMiddle() - first.getUpperBound()) -
                 (second.getMiddle() - second.getLowerBound());
-        return firstValue/secondValue;
+
+        double res = firstValue/secondValue;
+        if(res < 0){
+            return 0;
+        }
+        return res;
     }
 
 }
