@@ -7,6 +7,7 @@ import com.oracle.javafx.jmx.json.JSONReader;
 import fuzzy.Alternative;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
+import generic.MF_Interface;
 import helper.IntervalArithmetic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import program.controller.ProjectSceneController;
 import program.model.*;
+import type1.sets.T1MF_Triangular;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -226,7 +228,7 @@ public class ProjectSceneView extends Stage {
                             for (int j = 0; j < alternativeVectors.get(i).size(); j++) {
                                 rowSum = IntervalArithmetic.sum(rowSum,
                                         IntervalArithmetic.multiply(
-                                                alternativeVectors.get(i).get(j),
+                                                alternativeVectors.get(j).get(i),
                                                 criteriaVector.get(j)
                                         )
                                 );

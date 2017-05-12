@@ -14,5 +14,6 @@
     <orderEntry type="library" exported="" name="jfoenix" level="project" />
     <orderEntry type="library" exported="" name="richtextfx-fat-0.7-M5" level="project" />
     <orderEntry type="library" name="gson-2.3.1" level="project" />
+    <orderEntry type="library" name="Juzzy" level="project" />
   </component>
 </module>
