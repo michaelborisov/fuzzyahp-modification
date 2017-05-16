@@ -1,6 +1,8 @@
 package sample;
 
+import ahp.IntervalTypeTwoAHPMatrix;
 import com.jfoenix.controls.*;
+import fuzzy.Alternative;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -40,46 +42,46 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        employees.addAll(asList(
-                new TreeViewEntity("Критерий_1", CRITERIA),
-                new TreeViewEntity("Критерий_2", CRITERIA),
-                new TreeViewEntity("Критерий_3", CRITERIA),
-                new TreeViewEntity("Альтернатива_1", ALTERNATIVE),
-                new TreeViewEntity("Альтернатива_2", ALTERNATIVE),
-                new TreeViewEntity("Альтернатива_3", ALTERNATIVE)));
-        initStartScene(primaryStage);
+//        employees.addAll(asList(
+//                new TreeViewEntity("Критерий_1", CRITERIA),
+//                new TreeViewEntity("Критерий_2", CRITERIA),
+//                new TreeViewEntity("Критерий_3", CRITERIA),
+//                new TreeViewEntity("Альтернатива_1", ALTERNATIVE),
+//                new TreeViewEntity("Альтернатива_2", ALTERNATIVE),
+//                new TreeViewEntity("Альтернатива_3", ALTERNATIVE)));
+//        initStartScene(primaryStage);
 
 
 
 
         String[] paths = new String[]{
-                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_1.xlsx",
+//                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_1.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_2.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_3.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_4.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_5.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_6.xlsx",
-//                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_7.xlsx",
-                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_8.xlsx",
+                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_7.xlsx",
+//                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Symmetric_8.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_1.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_2.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_3.xlsx",
 //                "/Users/michaelborisov/IdeaProjects/fuzzyahp-modification/src/sample/Asymmetric_4.xlsx"
         };
 
-//        for(String path: paths) {
-//            System.out.println(path);
-//            for (double b = 0.5; b < 1; b += 0.01) {
-//                Settings.BOUNDARY_VALUE = b;
-//                IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(path);
-//                ArrayList<Alternative> alternatives = ahp.calculateResultVector();
-//                System.out.print(String.format("%.2f: ", b));
-//                for (int i = 0; i < alternatives.size(); i++) {
-//                    System.out.print(String.format("%s, ", alternatives.get(i).getName()));
-//                }
-//                System.out.println();
-//            }
-//        }
+        for(String path: paths) {
+            System.out.println(path);
+            for (double b = 0.5; b < 1; b += 0.01) {
+                helper.Settings.BOUNDARY_VALUE = b;
+                IntervalTypeTwoAHPMatrix ahp = new IntervalTypeTwoAHPMatrix(path);
+                ArrayList<Alternative> alternatives = ahp.calculateResultVector();
+                System.out.print(String.format("%.2f: ", b));
+                for (int i = 0; i < alternatives.size(); i++) {
+                    System.out.print(String.format("%s, ", alternatives.get(i).getName()));
+                }
+                System.out.println();
+            }
+        }
     }
 
     private void initStartScene(Stage primaryStage) throws Exception{

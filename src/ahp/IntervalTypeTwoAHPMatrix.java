@@ -13,7 +13,7 @@ import java.util.Comparator;
 /**
  * Created by michaelborisov on 26.03.17.
  */
-public class IntervalTypeTwoAHP {
+public class IntervalTypeTwoAHPMatrix {
 
     public ArrayList<ArrayList<IntervalTypeTwoMF>> getMatrix() {
         return matrix;
@@ -21,11 +21,11 @@ public class IntervalTypeTwoAHP {
 
     ArrayList<ArrayList<IntervalTypeTwoMF>> matrix;
 
-    public IntervalTypeTwoAHP (ArrayList<ArrayList<IntervalTypeTwoMF>> matrix){
+    public IntervalTypeTwoAHPMatrix(ArrayList<ArrayList<IntervalTypeTwoMF>> matrix){
         this.matrix = matrix;
     }
 
-    public IntervalTypeTwoAHP (String pathToExcel){
+    public IntervalTypeTwoAHPMatrix(String pathToExcel){
         ExcelFileParser parser = new ExcelFileParser(pathToExcel);
         try {
             this.matrix = parser.parseExcel();

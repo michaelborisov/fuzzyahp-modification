@@ -1,21 +1,19 @@
 package program.controller;
 
-import classes.ProjectInfo;
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
+import program.model.ProjectInfo;
 import com.google.gson.Gson;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
-import com.sun.tools.hat.internal.model.Root;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -61,6 +59,20 @@ public class StartSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //DELETE BELOW
+        double[][] mMatrix = new double[][]{
+                new double[]{1, 1.602, 1.076, 1.626, 1.843},
+                new double[]{0.625, 1, 3.294, 1.104, 2.784},
+                new double[]{0.93, 0.242, 1, 1.116, 1.17},
+                new double[]{0.615, 0.72, 0.713, 1, 1.06},
+                new double[]{0.543, 0.359, 0.855, 0.944,1}
+        };
+        Matrix a = new Matrix(mMatrix);
+        EigenvalueDecomposition res = a.eig();
+        double vectors = res.getD().get(0, 0);
+        System.out.println(res);
+        Matrix m = res.getD();
+        Matrix n = res.getV();
         JFXButton addButton = new JFXButton("+");
         addButton.setButtonType(JFXButton.ButtonType.RAISED);
         addButton.setStyle(addButtonStyle);
@@ -76,10 +88,12 @@ public class StartSceneController implements Initializable {
                 FileChooser fChooser = new FileChooser();
                 fChooser.setInitialDirectory(new File("."));
                 File savedFile = fChooser.showSaveDialog(addButton.getScene().getWindow());
-                String path = savedFile.getAbsolutePath();
-                saveProjectPathAndTitle(path, savedFile.getName());
-                new ProjectSceneController(path , savedFile.getName());
-                addButton.getScene().getWindow().hide();
+                if(savedFile != null) {
+                    String path = savedFile.getAbsolutePath();
+                    saveProjectPathAndTitle(path, savedFile.getName());
+                    new ProjectSceneController(path, savedFile.getName());
+                    addButton.getScene().getWindow().hide();
+                }
             }
         });
     }

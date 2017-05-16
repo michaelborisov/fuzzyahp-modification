@@ -1,4 +1,4 @@
-package classes;
+package program.model;
 
 import java.io.Serializable;
 

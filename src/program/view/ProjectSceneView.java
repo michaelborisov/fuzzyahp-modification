@@ -1,17 +1,13 @@
 package program.view;
 
-import ahp.IntervalTypeTwoAHP;
+import ahp.IntervalTypeTwoAHPMatrix;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeView;
-import com.oracle.javafx.jmx.json.JSONReader;
-import fuzzy.Alternative;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
-import generic.MF_Interface;
 import helper.IntervalArithmetic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,17 +18,20 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import program.controller.ProjectSceneController;
 import program.model.*;
-import type1.sets.T1MF_Triangular;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -60,6 +59,7 @@ public class ProjectSceneView extends Stage {
             entities.add(new CriteriaHierarchyEntity(a));
         }
         bPane = new BorderPane();
+        generateMenuBar();
         this.setTitle(title);
         this.setScene(new Scene(bPane, 700, 450));
         initLeftSideTreeView();
@@ -186,7 +186,7 @@ public class ProjectSceneView extends Stage {
                             }
 
                         }
-                        IntervalTypeTwoAHP ahp = new IntervalTypeTwoAHP(criteriaMatrix);
+                        IntervalTypeTwoAHPMatrix ahp = new IntervalTypeTwoAHPMatrix(criteriaMatrix);
                         ArrayList<Double[]> criteriaVector = ahp.calculateIntervalVector();
 
                         ArrayList<ArrayList<ArrayList<IntervalTypeTwoMF>>> alternativeMatricesList = new ArrayList<ArrayList<ArrayList<IntervalTypeTwoMF>>>();
@@ -218,7 +218,7 @@ public class ProjectSceneView extends Stage {
                         }
                         ArrayList<ArrayList<Double[]>> alternativeVectors = new ArrayList<ArrayList<Double[]>>();
                         for (ArrayList<ArrayList<IntervalTypeTwoMF>> alternativeMatrix: alternativeMatricesList) {
-                            ahp = new IntervalTypeTwoAHP(alternativeMatrix);
+                            ahp = new IntervalTypeTwoAHPMatrix(alternativeMatrix);
                             alternativeVectors.add(ahp.calculateIntervalVector());
                         }
 
@@ -268,7 +268,6 @@ public class ProjectSceneView extends Stage {
             }
         });
     }
-
 
     private void initCriteriaScene(){
         ScrollPane sPane = new ScrollPane();
@@ -579,6 +578,65 @@ public class ProjectSceneView extends Stage {
         }
 
         mProject.setCriteriaMatrix(newMatrix);
+    }
+
+    private void generateMenuBar(){
+        MenuBar menuBar = new MenuBar();
+
+        Menu menuFile = new Menu("Файл");
+
+        Menu menuFaq = new Menu("Справка");
+
+        MenuItem faq = new MenuItem("О программе");
+        faq.setAccelerator(KeyCombination.keyCombination("Ctrl+Q"));
+        faq.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                BorderPane bPane = new BorderPane();
+                Stage stage = new Stage();
+
+                Label info = new Label("Теоретическое обоснование работы");
+                Label email = new Label("Борисов Михаил \nБПИ133 \nmyuborisov@edu.hse.ru");
+                email.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+                email.setTextAlignment(TextAlignment.CENTER);
+                bPane.setCenter(email);
+                stage.setTitle("Справка");
+                stage.setScene(new Scene(bPane, 350, 450));
+                stage.show();
+            }
+        });
+        menuFaq.getItems().addAll(faq);
+
+        MenuItem result = new MenuItem("Открыть");
+        result.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
+        result.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = new Stage();
+                stage.setTitle("Результат");
+                final CategoryAxis xAxis = new CategoryAxis();
+                final NumberAxis yAxis = new NumberAxis();
+                final BarChart<String,Number> bc =
+                        new BarChart<String,Number>(xAxis,yAxis);
+                bc.setTitle("Результаты ");
+                xAxis.setLabel("Альтернативы");
+                yAxis.setLabel("Доля");
+
+                XYChart.Series series1 = new XYChart.Series();
+                series1.setName("Приоритеты");
+                series1.getData().add(new XYChart.Data("Альтернатива_1", 0.296));
+                series1.getData().add(new XYChart.Data("Альтернатива_2", 0.323));
+                series1.getData().add(new XYChart.Data("Альтернатива_3", 0.217));
+                series1.getData().add(new XYChart.Data("Альтернатива_4", 0.164));
+
+                Scene scene  = new Scene(bc,800,600);
+                bc.getData().addAll(series1);
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
+        menuFile.getItems().add(result);
+        menuBar.getMenus().addAll(menuFile, menuFaq);
+        bPane.setTop(menuBar);
     }
     private static String matrixCellButtonStyle =
             "    -fx-background-color: #0066FF;\n" +

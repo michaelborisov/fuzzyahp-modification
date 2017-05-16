@@ -1,6 +1,6 @@
 package program.view;
 
-import classes.ProjectInfo;
+import program.model.ProjectInfo;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
