@@ -70,12 +70,11 @@ public class ProjectSceneController {
         mProject.setAlternatives(alternatives);
         mProject.setCriteria(criteriaList);
 
-        Assumption[][] criteria = new Assumption[3][3];
+        Assumption[][] criteria = new Assumption[2][2];
 
         ArrayList<Assumption[][]> alternativeMatrices = new ArrayList<>();
-        alternativeMatrices.add(new Assumption[3][3]);
-        alternativeMatrices.add(new Assumption[3][3]);
-        alternativeMatrices.add(new Assumption[3][3]);
+        alternativeMatrices.add(new Assumption[2][2]);
+        alternativeMatrices.add(new Assumption[2][2]);
 
         mProject.setCriteriaMatrix(criteria);
         mProject.setAlternativeMatrices(alternativeMatrices);

@@ -1,5 +1,7 @@
 package ahp;
 
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import fuzzy.Alternative;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
@@ -34,6 +36,34 @@ public class IntervalTypeTwoAHPMatrix {
         }
     }
 
+    public double calculateEigenValue(){
+        double[][][] source = new double[][][]{new double[][]{new double[]{1,1,1}, new double[]{0.89,1.6,2.25}, new double[]{0.65,1.07,1.88}, new double[]{0.82,1.47,2.76}, new double[]{0.8,1.37,3.19}},
+                         new double[][]{new double[]{0.44,0.62,1.12}, new double[]{1,1,1}, new double[]{2.02,3.08,4.64}, new double[]{0.80,1,1.47}, new double[]{1.17,2.36,4.53}},
+                         new double[][]{new double[]{0.53,0.93,1.53}, new double[]{0.22,0.34,0.50}, new double[]{1,1,1}, new double[]{0.68,1.11,1.66}, new double[]{0.80,1,1.72}},
+                         new double[][]{new double[]{0.36,0.68,1.21}, new double[]{0.68,1,1.26}, new double[]{0.60,0.90,1.47}, new double[]{1,1,1}, new double[]{0.76,0.93,1.25}},
+                         new double[][]{new double[]{0.31,0.73,1.26}, new double[]{0.22,0.42,0.86}, new double[]{0.58,1,1.26}, new double[]{0.80,1.08,1.32}, new double[]{1,1,1}}};
+        double[][] notDoubleMatrix = new double[matrix.size()][matrix.size()];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5.; j++) {
+                double[] ar = source[i][j];
+                notDoubleMatrix[i][j] = new TypeOneMF(ar[0], ar[1], ar[2]).getDefuzzifiedCOS();
+            }
+        }
+        Matrix a = new Matrix(notDoubleMatrix);
+        EigenvalueDecomposition res = a.eig();
+        double maxEigenValue = res.getD().get(0, 0);
+
+        double[][] doubleMatrix = new double[matrix.size()][matrix.size()];
+        for (int i = 0; i < matrix.size(); i++) {
+            for (int j = 0; j < matrix.get(i).size(); j++) {
+                doubleMatrix[i][j] = matrix.get(i).get(j).getCentroid(10).getLeft();
+            }
+        }
+        a = new Matrix(doubleMatrix);
+        res = a.eig();
+        maxEigenValue = res.getD().get(0, 0);
+        return maxEigenValue;
+    }
     private IntervalTypeTwoMF calculateMatrixAggregation(){
         double lowerBoundsLower = 0.0;
         double lowerBoundsUpper = 0.0;

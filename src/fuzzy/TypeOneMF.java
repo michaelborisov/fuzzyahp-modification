@@ -1,9 +1,11 @@
 package fuzzy;
 
+import type1.sets.T1MF_Triangular;
+
 /**
  * Created by michaelborisov on 26.03.17.
  */
-public class TypeOneMF {
+public class TypeOneMF extends T1MF_Triangular {
 
     public double getLowerBound() {
         return lowerBound;
@@ -26,6 +28,7 @@ public class TypeOneMF {
     }
 
     public TypeOneMF(double lowerBound, double middle, double upperBound){
+        super("Anonymous", lowerBound, middle, upperBound);
         this.lowerBound = lowerBound;
         this.middle = middle;
         this.upperBound = upperBound;

@@ -28,11 +28,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import program.controller.ProjectSceneController;
 import program.model.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
@@ -47,6 +49,7 @@ public class ProjectSceneView extends Stage {
     BorderPane bPane;
     ProjectSceneController mController;
     AhpProject mProject;
+    ContextMenu cm = new ContextMenu();;
 
     public ProjectSceneView(String title, AhpProject mProject, ProjectSceneController mController){
         this.mController = mController;
@@ -150,7 +153,7 @@ public class ProjectSceneView extends Stage {
             @Override
             public void handle(MouseEvent event) {
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-                final ContextMenu cm = new ContextMenu();
+
                 if(event.getButton() == MouseButton.PRIMARY){
 
                     if (selectedItem.getValue().equals("Критерии")) {
@@ -486,6 +489,8 @@ public class ProjectSceneView extends Stage {
                                      ContextMenu cm,
                                      JFXTreeView<String> treeView,
                                      MouseEvent event){
+
+
         MenuItem cmItem2 = new MenuItem("Переименовать");
         cmItem2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -553,7 +558,9 @@ public class ProjectSceneView extends Stage {
                 }
             }
         });
+        cm.getItems().clear();
         cm.getItems().addAll(cmItem2, cmItem3);
+        cm.hide();
         cm.show(treeView, event.getScreenX(), event.getScreenY());
     }
 
@@ -585,6 +592,8 @@ public class ProjectSceneView extends Stage {
 
         Menu menuFile = new Menu("Файл");
 
+        Menu menuSettings = new Menu("Настройки");
+
         Menu menuFaq = new Menu("Справка");
 
         MenuItem faq = new MenuItem("О программе");
@@ -611,31 +620,24 @@ public class ProjectSceneView extends Stage {
         result.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = new Stage();
-                stage.setTitle("Результат");
-                final CategoryAxis xAxis = new CategoryAxis();
-                final NumberAxis yAxis = new NumberAxis();
-                final BarChart<String,Number> bc =
-                        new BarChart<String,Number>(xAxis,yAxis);
-                bc.setTitle("Результаты ");
-                xAxis.setLabel("Альтернативы");
-                yAxis.setLabel("Доля");
-
-                XYChart.Series series1 = new XYChart.Series();
-                series1.setName("Приоритеты");
-                series1.getData().add(new XYChart.Data("Альтернатива_1", 0.296));
-                series1.getData().add(new XYChart.Data("Альтернатива_2", 0.323));
-                series1.getData().add(new XYChart.Data("Альтернатива_3", 0.217));
-                series1.getData().add(new XYChart.Data("Альтернатива_4", 0.164));
-
-                Scene scene  = new Scene(bc,800,600);
-                bc.getData().addAll(series1);
-                stage.setScene(scene);
-                stage.show();
+                FileChooser fChooser = new FileChooser();
+                File chosen = fChooser.showOpenDialog(menuBar.getScene().getWindow());
+                if(chosen != null) {
+                    new ProjectSceneController(chosen.getAbsolutePath(), chosen.getName());
+                }
             }
         });
         menuFile.getItems().add(result);
-        menuBar.getMenus().addAll(menuFile, menuFaq);
+
+        MenuItem changeT1MFs = new MenuItem("Настроить оценки");
+        changeT1MFs.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                new AssumptionChangeSceneView().show();
+            }
+        });
+        menuSettings.getItems().add(changeT1MFs);
+        menuBar.getMenus().addAll(menuFile, menuSettings, menuFaq);
         bPane.setTop(menuBar);
     }
     private static String matrixCellButtonStyle =

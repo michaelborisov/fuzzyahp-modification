@@ -74,6 +74,7 @@ public class Main extends Application {
             for (double b = 0.5; b < 1; b += 0.01) {
                 helper.Settings.BOUNDARY_VALUE = b;
                 IntervalTypeTwoAHPMatrix ahp = new IntervalTypeTwoAHPMatrix(path);
+                ahp.calculateEigenValue();
                 ArrayList<Alternative> alternatives = ahp.calculateResultVector();
                 System.out.print(String.format("%.2f: ", b));
                 for (int i = 0; i < alternatives.size(); i++) {
