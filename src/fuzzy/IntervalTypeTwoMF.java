@@ -5,10 +5,9 @@ import intervalType2.sets.IntervalT2MF_Triangular;
 /**
  * Created by michaelborisov on 26.03.17.
  */
-public class IntervalTypeTwoMF extends IntervalT2MF_Triangular {
+public class IntervalTypeTwoMF {
 
     public IntervalTypeTwoMF(TypeOneMF lowerMF, TypeOneMF upperMF){
-        super("Anonymous", upperMF, lowerMF);
         this.lowerMF = lowerMF;
         this.upperMF = upperMF;
     }

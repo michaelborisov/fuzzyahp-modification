@@ -46,7 +46,7 @@ public class IntervalTypeTwoAHPMatrix {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5.; j++) {
                 double[] ar = source[i][j];
-                notDoubleMatrix[i][j] = new TypeOneMF(ar[0], ar[1], ar[2]).getDefuzzifiedCOS();
+                //notDoubleMatrix[i][j] = new TypeOneMF(ar[0], ar[1], ar[2]).getDefuzzifiedCOS();
             }
         }
         Matrix a = new Matrix(notDoubleMatrix);
@@ -56,7 +56,7 @@ public class IntervalTypeTwoAHPMatrix {
         double[][] doubleMatrix = new double[matrix.size()][matrix.size()];
         for (int i = 0; i < matrix.size(); i++) {
             for (int j = 0; j < matrix.get(i).size(); j++) {
-                doubleMatrix[i][j] = matrix.get(i).get(j).getCentroid(10).getLeft();
+                //doubleMatrix[i][j] = matrix.get(i).get(j).getCentroid(10).getLeft();
             }
         }
         a = new Matrix(doubleMatrix);

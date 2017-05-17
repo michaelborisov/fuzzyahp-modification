@@ -7,19 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/program/controller/AssumptionChangeSceneController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/First project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Second project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/borisov.bachelor/sample/~$Symmetric_7.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Копия First project" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java" afterPath="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java" afterPath="$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fuzzy/TypeOneMF.java" afterPath="$PROJECT_DIR$/src/fuzzy/TypeOneMF.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/program/controller/ProjectSceneController.java" afterPath="$PROJECT_DIR$/src/program/controller/ProjectSceneController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java" afterPath="$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" afterPath="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sample/Main.java" afterPath="$PROJECT_DIR$/src/sample/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Выбор школы" afterPath="$PROJECT_DIR$/Выбор школы" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -34,6 +27,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/fuzzyahp-modification$Main.coverage" NAME="Main Coverage Results" MODIFIED="1495047978659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>sample.*</FILTER>
+    </SUITE>
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -88,20 +86,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AssumptionChangeSceneView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AssumptionChangeSceneView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="313">
-              <caret line="72" column="19" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
+              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#857#858#0" expanded="true" />
                 <element signature="e#894#895#0" expanded="true" />
-                <element signature="e#3939#3940#0" expanded="true" />
-                <element signature="e#3970#3971#0" expanded="true" />
-                <element signature="e#4038#4039#0" expanded="true" />
-                <element signature="e#4080#4081#0" expanded="true" />
+                <element signature="e#3920#3921#0" expanded="true" />
+                <element signature="e#3951#3952#0" expanded="true" />
+                <element signature="e#4019#4020#0" expanded="true" />
+                <element signature="e#4061#4062#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IntervalTypeTwoAHPMatrix.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -109,8 +117,30 @@
       <file leaf-file-name="AssumptionSceneView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/program/view/AssumptionSceneView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
+            <state relative-caret-position="-1215">
               <caret line="53" column="14" selection-start-line="53" selection-start-column="14" selection-end-line="53" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AhpProject.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/program/model/AhpProject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProjectSceneController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/program/controller/ProjectSceneController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -119,18 +149,49 @@
       <file leaf-file-name="ProjectSceneView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="321" column="45" selection-start-line="321" selection-start-column="40" selection-end-line="321" selection-end-column="45" />
+            <state relative-caret-position="203">
+              <caret line="410" column="0" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
               <folding>
                 <element signature="method#initLeftSideTreeView#0;class#ProjectSceneView#0" expanded="false" />
                 <element signature="method#updateAlternativesAndCriteriaProjectLists#0;class#ProjectSceneView#0" expanded="false" />
                 <element signature="e#11633#11641#0" expanded="true" />
-                <element signature="method#initSpecificCriterionScene#0;class#ProjectSceneView#0" expanded="false" />
                 <element signature="method#addMenuItemClick#0;class#ProjectSceneView#0" expanded="false" />
                 <element signature="method#modifyCriteriaMatrix#0;class#ProjectSceneView#0" expanded="false" />
-                <element signature="e#28882#28883#0" expanded="true" />
-                <element signature="e#28952#28953#0" expanded="true" />
+                <element signature="e#29192#29193#0" expanded="true" />
+                <element signature="e#29262#29263#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IntervalTypeTwoMF.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+              <folding>
+                <element signature="method#toString#0;class#IntervalTypeTwoMF#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TypeOneMF.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/fuzzy/TypeOneMF.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="29" column="74" selection-start-line="29" selection-start-column="74" selection-end-line="29" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StartSceneController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/program/controller/StartSceneController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -194,13 +255,13 @@
         <option value="$PROJECT_DIR$/src/program/controller/StartSceneController.java" />
         <option value="$PROJECT_DIR$/src/program/model/ProjectInfo.java" />
         <option value="$PROJECT_DIR$/src/program/model/AhpProject.java" />
-        <option value="$PROJECT_DIR$/src/fuzzy/TypeOneMF.java" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
-        <option value="$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java" />
-        <option value="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java" />
         <option value="$PROJECT_DIR$/src/program/controller/ProjectSceneController.java" />
-        <option value="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" />
         <option value="$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java" />
+        <option value="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" />
+        <option value="$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java" />
+        <option value="$PROJECT_DIR$/src/fuzzy/TypeOneMF.java" />
+        <option value="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java" />
       </list>
     </option>
   </component>
@@ -987,12 +1048,12 @@
       <workItem from="1493105438718" duration="245000" />
       <workItem from="1493578868433" duration="7257000" />
       <workItem from="1494069475999" duration="69206000" />
-      <workItem from="1495025694195" duration="13322000" />
+      <workItem from="1495025694195" duration="13837000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="165996000" />
+    <option name="totallyTimeSpent" value="166511000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -1006,7 +1067,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1058,19 +1120,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>584</line>
+          <line>589</line>
           <properties />
           <option name="timeStamp" value="88" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>548</line>
+          <line>553</line>
           <properties />
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>567</line>
+          <line>572</line>
           <properties />
           <option name="timeStamp" value="90" />
         </line-breakpoint>
@@ -1121,12 +1183,6 @@
           <line>227</line>
           <properties />
           <option name="timeStamp" value="128" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/program/controller/StartSceneController.java</url>
-          <line>70</line>
-          <properties />
-          <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sample/Main.java</url>
@@ -1182,8 +1238,14 @@
           <properties />
           <option name="timeStamp" value="140" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
+          <line>405</line>
+          <properties />
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="141" />
+      <option name="time" value="143" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1268,6 +1330,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1401,6 +1464,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
           <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1454,24 +1518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fuzzy/TypeOneMF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/program/model/AhpProject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/libs/Juzzy.jar!/intervalType2/sets/IntervalT2Engine_Centroid.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
@@ -1485,16 +1531,6 @@
         <state relative-caret-position="-60">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-          <folding>
-            <element signature="method#toString#0;class#IntervalTypeTwoMF#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1522,34 +1558,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="58" column="57" selection-start-line="58" selection-start-column="57" selection-end-line="58" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/program/view/StartSceneView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="69" column="44" selection-start-line="69" selection-start-column="44" selection-end-line="69" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/program/controller/StartSceneController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="131" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/program/controller/ProjectSceneController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
-          <caret line="75" column="51" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -1578,44 +1590,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java">
+    <entry file="file://$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="321" column="45" selection-start-line="321" selection-start-column="40" selection-end-line="321" selection-end-column="45" />
+        <state relative-caret-position="313">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
-            <element signature="method#initLeftSideTreeView#0;class#ProjectSceneView#0" expanded="false" />
-            <element signature="method#updateAlternativesAndCriteriaProjectLists#0;class#ProjectSceneView#0" expanded="false" />
-            <element signature="e#11633#11641#0" expanded="true" />
-            <element signature="method#initSpecificCriterionScene#0;class#ProjectSceneView#0" expanded="false" />
-            <element signature="method#addMenuItemClick#0;class#ProjectSceneView#0" expanded="false" />
-            <element signature="method#modifyCriteriaMatrix#0;class#ProjectSceneView#0" expanded="false" />
-            <element signature="e#28882#28883#0" expanded="true" />
-            <element signature="e#28952#28953#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
+            <element signature="e#894#895#0" expanded="true" />
+            <element signature="e#3920#3921#0" expanded="true" />
+            <element signature="e#3951#3952#0" expanded="true" />
+            <element signature="e#4019#4020#0" expanded="true" />
+            <element signature="e#4061#4062#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/program/view/AssumptionSceneView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
+        <state relative-caret-position="-1215">
           <caret line="53" column="14" selection-start-line="53" selection-start-column="14" selection-end-line="53" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java">
+    <entry file="file://$PROJECT_DIR$/src/program/controller/StartSceneController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="72" column="19" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
+        <state relative-caret-position="137">
+          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/program/model/AhpProject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#857#858#0" expanded="true" />
-            <element signature="e#894#895#0" expanded="true" />
-            <element signature="e#3939#3940#0" expanded="true" />
-            <element signature="e#3970#3971#0" expanded="true" />
-            <element signature="e#4038#4039#0" expanded="true" />
-            <element signature="e#4080#4081#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/program/controller/ProjectSceneController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="410" column="0" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
+          <folding>
+            <element signature="method#initLeftSideTreeView#0;class#ProjectSceneView#0" expanded="false" />
+            <element signature="method#updateAlternativesAndCriteriaProjectLists#0;class#ProjectSceneView#0" expanded="false" />
+            <element signature="e#11633#11641#0" expanded="true" />
+            <element signature="method#addMenuItemClick#0;class#ProjectSceneView#0" expanded="false" />
+            <element signature="method#modifyCriteriaMatrix#0;class#ProjectSceneView#0" expanded="false" />
+            <element signature="e#29192#29193#0" expanded="true" />
+            <element signature="e#29262#29263#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fuzzy/IntervalTypeTwoMF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+          <folding>
+            <element signature="method#toString#0;class#IntervalTypeTwoMF#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fuzzy/TypeOneMF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="29" column="74" selection-start-line="29" selection-start-column="74" selection-end-line="29" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHPMatrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>

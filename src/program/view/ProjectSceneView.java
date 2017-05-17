@@ -420,6 +420,11 @@ public class ProjectSceneView extends Stage {
                         mButton.setStyle(matrixCellButtonStyle);
                         mButton.setText(mProject.getAlternativeMatrices().get(criteriaIndex)[j - 1][i - 1].getLabel());
                     }
+
+                    if (mProject.getAlternativeMatrices().get(criteriaIndex)[i - 1][j - 1] != null) {
+                        mButton.setStyle(matrixCellButtonStyle);
+                        mButton.setText(mProject.getAlternativeMatrices().get(criteriaIndex)[i - 1][j - 1].getLabel());
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     updateAlternativesAndCriteriaProjectLists();

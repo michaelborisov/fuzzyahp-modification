@@ -70,7 +70,7 @@ public class AssumptionChangeSceneView extends Stage {
 
                     ValueChangeScene mChangeScene = new ValueChangeScene(new TypeOneMF(1, 3, 5));
                     mChangeScene.show();
-                   
+
                 }
             });
         }
