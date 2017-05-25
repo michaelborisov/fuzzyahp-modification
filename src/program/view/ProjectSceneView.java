@@ -18,6 +18,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -62,11 +64,30 @@ public class ProjectSceneView extends Stage {
             entities.add(new CriteriaHierarchyEntity(a));
         }
         bPane = new BorderPane();
+        bPane.setCenter(generateWelcomeScreen());
         generateMenuBar();
         this.setTitle(title);
         this.setScene(new Scene(bPane, 700, 450));
+        bPane.setStyle("-fx-background-color:#FFF");
         initLeftSideTreeView();
     }
+
+    private VBox generateWelcomeScreen(){
+        VBox mVbox = new VBox();
+        Label email = new Label("Добро пожаловать!");
+        Image mImage = new Image("file:logo.jpg");
+        ImageView mView = new ImageView();
+        mView.setFitHeight(250);
+        mView.setFitWidth(250);
+        mView.setImage(mImage);
+        email.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+        email.setTextAlignment(TextAlignment.CENTER);
+        mVbox.getChildren().addAll(email, mView);
+        mVbox.setAlignment(Pos.CENTER);
+        mVbox.setSpacing(10);
+        return mVbox;
+    }
+
 
     private void initLeftSideTreeView(){
         TreeItem<String> rootNode = new TreeItem<>("Цель");
@@ -341,7 +362,8 @@ public class ProjectSceneView extends Stage {
                     public void handle(MouseEvent event) {
                         AssumptionSceneView mAssumptionView = new AssumptionSceneView(
                                 GridPane.getRowIndex(mButton),
-                                GridPane.getColumnIndex(mButton)
+                                GridPane.getColumnIndex(mButton),
+                                mProject
                         );
 
                         mAssumptionView.setOnHidden(new EventHandler<WindowEvent>() {
@@ -420,7 +442,8 @@ public class ProjectSceneView extends Stage {
                     public void handle(MouseEvent event) {
                         AssumptionSceneView mAssumptionView = new AssumptionSceneView(
                                 GridPane.getRowIndex(mButton),
-                                GridPane.getColumnIndex(mButton)
+                                GridPane.getColumnIndex(mButton),
+                                mProject
                         );
 
                         mAssumptionView.setOnHidden(new EventHandler<WindowEvent>() {
@@ -716,7 +739,7 @@ public class ProjectSceneView extends Stage {
         changeT1MFs.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                new AssumptionChangeSceneView().show();
+                new AssumptionChangeSceneView(mProject).show();
             }
         });
         menuSettings.getItems().add(changeT1MFs);

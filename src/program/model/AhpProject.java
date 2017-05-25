@@ -1,8 +1,10 @@
 package program.model;
 
 import com.google.gson.Gson;
+import fuzzy.TypeOneMF;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -77,4 +79,41 @@ public class AhpProject {
         Gson gson = new Gson();
         return (AhpProject)gson.fromJson(stringRepr, AhpProject.class);
     }
+
+    public ArrayList<TypeOneMF> getExpectations() {
+        if (expectations == null){
+            expectations = generateDefaultMFs();
+        }
+        return expectations;
+    }
+
+    public ArrayList<TypeOneMF> generateDefaultMFs(){
+        ArrayList<TypeOneMF> mfs = new ArrayList<>();
+        mfs.add(new TypeOneMF(1, 1, 3));
+        mfs.add(new TypeOneMF(1, 3, 5));
+        mfs.add(new TypeOneMF(3, 5, 7));
+        mfs.add(new TypeOneMF(5, 7 ,9));
+        mfs.add(new TypeOneMF(7, 9, 9));
+        return mfs;
+    }
+
+
+    public ArrayList<TypeOneMF> getConfDegrees() {
+        if(confDegrees == null){
+            confDegrees = generateDefaultMFs();
+        }
+        return confDegrees;
+    }
+
+    private ArrayList<TypeOneMF> expectations;
+
+    public void setConfDegrees(ArrayList<TypeOneMF> confDegrees) {
+        this.confDegrees = confDegrees;
+    }
+
+    public void setExpectations(ArrayList<TypeOneMF> expectations) {
+        this.expectations = expectations;
+    }
+
+    private ArrayList<TypeOneMF> confDegrees;
 }

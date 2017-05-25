@@ -94,5 +94,23 @@ public class ProjectSceneController {
 
         mProject.setCriteriaMatrix(criteria);
         mProject.setAlternativeMatrices(alternativeMatrices);
+
+        ArrayList<TypeOneMF> expectations = new ArrayList<>();
+        expectations.add(new TypeOneMF(1, 1, 3));
+        expectations.add(new TypeOneMF(1, 3, 5));
+        expectations.add(new TypeOneMF(3, 5, 7));
+        expectations.add(new TypeOneMF(5, 7 ,9));
+        expectations.add(new TypeOneMF(7, 9, 9));
+
+        mProject.setExpectations(expectations);
+
+        ArrayList<TypeOneMF> confDegrees = new ArrayList<>();
+        confDegrees.add(new TypeOneMF(1, 1, 3));
+        confDegrees.add(new TypeOneMF(1, 3, 5));
+        confDegrees.add(new TypeOneMF(3, 5, 7));
+        confDegrees.add(new TypeOneMF(5, 7 ,9));
+        confDegrees.add(new TypeOneMF(7, 9, 9));
+
+        mProject.setConfDegrees(confDegrees);
     }
 }

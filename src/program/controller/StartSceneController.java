@@ -55,7 +55,7 @@ public class StartSceneController implements Initializable {
                         new ProjectSceneController(projectPath, selectedTitle);
                         tasksList.getScene().getWindow().hide();
                     }catch (Exception e){
-
+                        e.printStackTrace();
                     }
                 }
             }

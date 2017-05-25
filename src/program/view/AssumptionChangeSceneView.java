@@ -19,6 +19,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import program.model.AhpProject;
 import program.model.Assumption;
 
 import java.util.ArrayList;
@@ -28,7 +29,9 @@ import java.util.ArrayList;
  */
 public class AssumptionChangeSceneView extends Stage {
 
-    public AssumptionChangeSceneView(){
+    AhpProject mProject;
+    public AssumptionChangeSceneView(AhpProject mProject){
+        this.mProject = mProject;
         generateButtonScene();
     }
 
@@ -64,15 +67,7 @@ public class AssumptionChangeSceneView extends Stage {
         expButtons.add(expFifth);
 
         for (int i = 0; i < expButtons.size(); i++) {
-            expButtons.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-
-                    ValueChangeScene mChangeScene = new ValueChangeScene(new TypeOneMF(1, 3, 5));
-                    mChangeScene.show();
-
-                }
-            });
+            setOnClick(i, expButtons.get(i));
         }
 
         VBox vboxExp = new VBox();
@@ -85,6 +80,21 @@ public class AssumptionChangeSceneView extends Stage {
         vboxExp.setPadding(new Insets(10));
 
         return vboxExp;
+    }
+
+    private void setOnClick (int i, JFXButton expButton){
+        expButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ValueChangeScene mChangeScene = new ValueChangeScene(mProject.getExpectations().get(i), expButton.getText());
+                mChangeScene.showAndWait();
+                TypeOneMF changedValue = mChangeScene.getNewValue();
+                if (changedValue != null) {
+                    mProject.getExpectations().set(i, changedValue);
+                }
+            }
+        });
     }
 
     private VBox generateConfidenceButtons(){
@@ -119,7 +129,8 @@ class ValueChangeScene extends Stage{
     }
 
     TypeOneMF newValue;
-    public ValueChangeScene(TypeOneMF mf){
+    public ValueChangeScene(TypeOneMF mf, String buttonText){
+        this.setTitle(buttonText);
         generateTextInputScene(mf);
     }
 
@@ -154,6 +165,14 @@ class ValueChangeScene extends Stage{
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                try{
+                    Double.valueOf(textLower.getText());
+                    Double.valueOf(textMiddle.getText());
+                    Double.valueOf(textUpper.getText());
+                }catch (NumberFormatException ex){
+                    event.consume();
+                    return;
+                }
                 newValue = new TypeOneMF(
                         Double.valueOf(textLower.getText()),
                         Double.valueOf(textMiddle.getText()),
@@ -171,7 +190,6 @@ class ValueChangeScene extends Stage{
         Stage stage = this;
         bPane.setCenter(resBox);
         bPane.setBottom(mBox);
-        stage.setTitle("Слабое преобладание: E2");
         stage.setScene(new Scene(bPane));
     }
 
