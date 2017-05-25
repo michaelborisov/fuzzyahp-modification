@@ -2,13 +2,11 @@ package program.view;
 
 import com.jfoenix.controls.JFXButton;
 import fuzzy.TypeOneMF;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -17,10 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
+import program.controller.ProjectSceneController;
 import program.model.AhpProject;
-import program.model.Assumption;
 
 import java.util.ArrayList;
 
@@ -30,8 +26,10 @@ import java.util.ArrayList;
 public class AssumptionChangeSceneView extends Stage {
 
     AhpProject mProject;
-    public AssumptionChangeSceneView(AhpProject mProject){
+    ProjectSceneController mController;
+    public AssumptionChangeSceneView(AhpProject mProject, ProjectSceneController controller){
         this.mProject = mProject;
+        this.mController = controller;
         generateButtonScene();
     }
 
@@ -67,7 +65,7 @@ public class AssumptionChangeSceneView extends Stage {
         expButtons.add(expFifth);
 
         for (int i = 0; i < expButtons.size(); i++) {
-            setOnClick(i, expButtons.get(i));
+            setOnClickExpectation(i, expButtons.get(i), true);
         }
 
         VBox vboxExp = new VBox();
@@ -82,20 +80,30 @@ public class AssumptionChangeSceneView extends Stage {
         return vboxExp;
     }
 
-    private void setOnClick (int i, JFXButton expButton){
-        expButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    private void setOnClickExpectation(int i, JFXButton mButton, boolean isExpectation){
+        mButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ValueChangeScene mChangeScene = new ValueChangeScene(mProject.getExpectations().get(i), expButton.getText());
-                mChangeScene.showAndWait();
-                TypeOneMF changedValue = mChangeScene.getNewValue();
-                if (changedValue != null) {
-                    mProject.getExpectations().set(i, changedValue);
+                if(isExpectation) {
+                    ValueChangeScene mChangeScene = new ValueChangeScene(mProject.getExpectations().get(i), mButton.getText());
+                    mChangeScene.showAndWait();
+                    TypeOneMF changedValue = mChangeScene.getNewValue();
+                    if (changedValue != null) {
+                        mProject.getExpectations().set(i, changedValue);
+                    }
+                }else{
+                    ValueChangeScene mChangeScene = new ValueChangeScene(mProject.getConfDegrees().get(i), mButton.getText());
+                    mChangeScene.showAndWait();
+                    TypeOneMF changedValue = mChangeScene.getNewValue();
+                    if (changedValue != null) {
+                        mProject.getConfDegrees().set(i, changedValue);
+                    }
                 }
+                mController.saveProjectToFile();
             }
         });
     }
+
 
     private VBox generateConfidenceButtons(){
         Label conf = new Label("Уверенность");
@@ -107,6 +115,17 @@ public class AssumptionChangeSceneView extends Stage {
         JFXButton confThird = new JFXButton("Уверен: C3");
         JFXButton confFourth = new JFXButton("Очень уверен: C4");
         JFXButton confFifth = new JFXButton("Абсолютно уверен: C5");
+
+        ArrayList <JFXButton> confDegreeButtons = new ArrayList<>();
+        confDegreeButtons.add(confFirst);
+        confDegreeButtons.add(confSecond);
+        confDegreeButtons.add(confThird);
+        confDegreeButtons.add(confFourth);
+        confDegreeButtons.add(confFifth);
+
+        for (int i = 0; i < confDegreeButtons.size(); i++) {
+            setOnClickExpectation(i, confDegreeButtons.get(i), false);
+        }
 
         VBox vboxConf = new VBox();
         vboxConf.getChildren().add(conf);

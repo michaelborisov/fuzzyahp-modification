@@ -2,6 +2,10 @@ package program.controller;
 
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
+import javafx.event.ActionEvent;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import program.model.ProjectInfo;
 import com.google.gson.Gson;
 import com.jfoenix.controls.JFXButton;
@@ -16,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import program.view.StartSceneView;
 
 import java.io.File;
 import java.io.FileReader;
@@ -31,13 +36,14 @@ public class StartSceneController implements Initializable {
 
     @FXML
     HBox buttonBox;
-
+    StartSceneView mView;
+    ContextMenu cm = new ContextMenu();
     public StartSceneController(){
 
     }
 
-    public StartSceneController(JFXListView <Label> tasksList){
-
+    public StartSceneController(JFXListView <Label> tasksList, StartSceneView mView){
+        this.mView = mView;
         tasksList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -52,11 +58,25 @@ public class StartSceneController implements Initializable {
                 }
                 if(event.getClickCount() == 2){
                     try {
-                        new ProjectSceneController(projectPath, selectedTitle);
+                        ProjectSceneController pController = new ProjectSceneController(projectPath, selectedTitle);
+                        //pController.setsController(StartSceneController.this);
                         tasksList.getScene().getWindow().hide();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }
+                if (event.getButton() == MouseButton.SECONDARY){
+                    MenuItem cmItem1 = new MenuItem("Удалить");
+                    final String pPath = projectPath;
+                    cmItem1.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            deleteProjectFromShortList(pPath, selectedTitle);
+                        }
+                    });
+                    cm.getItems().clear();
+                    cm.getItems().add(cmItem1);
+                    cm.show(tasksList, event.getScreenX(), event.getScreenY());
                 }
             }
         });
@@ -119,6 +139,34 @@ public class StartSceneController implements Initializable {
         }catch (IOException ioEx){
             ioEx.printStackTrace();
         }
+    }
+
+    public void deleteProjectFromShortList(String projectPath, String projectTitle){
+        String projectInfosPath = String.format(".%s%s", File.separator, "projects.fahpm");
+        List<ProjectInfo> projectInfos = readAllProjectInfos(projectInfosPath);
+        ProjectInfo pinfo = null;
+        for (int i = 0; i < projectInfos.size(); i++) {
+            if(projectInfos.get(i).getProjectTitle().equals(projectTitle) &&
+                    projectInfos.get(i).getProjectPath().equals(projectPath)) {
+                pinfo = projectInfos.get(i);
+                break;
+            }
+        }
+        if(pinfo != null) {
+            projectInfos.remove(pinfo);
+        }
+
+        Gson gson = new Gson();
+        try {
+            FileWriter writer = new FileWriter(projectInfosPath);
+            writer.write(gson.toJson(projectInfos));
+            writer.flush();
+            writer.close();
+        }catch (IOException ioEx){
+            ioEx.printStackTrace();
+        }
+        mView.updatePreviousTaskList();
+
     }
 
     public void chooseProjectPathAndTitle (String projectPath, String projectTitle) {

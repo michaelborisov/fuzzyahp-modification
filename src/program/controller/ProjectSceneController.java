@@ -17,6 +17,12 @@ public class ProjectSceneController {
 
     AhpProject mProject;
     String projectFilePath;
+
+    public void setsController(StartSceneController sController) {
+        this.sController = sController;
+    }
+
+    StartSceneController sController;
     Gson gson = new Gson();
 
     public ProjectSceneController(String projectFilePath, String projectTitle){
@@ -51,6 +57,7 @@ public class ProjectSceneController {
             alert.setTitle("Ошибка при загрузке проекта");
             alert.setHeaderText("При загрузке проекта произошла ошибка");
             alert.setContentText("Файл проекта не найден. Проверьте, не был ли файл перемещён или удалён");
+            //sController.deleteProjectFromShortList(projectFilePath, projectTitle);
 
             alert.showAndWait();
 //            return;

@@ -51,7 +51,7 @@ public class ProjectSceneView extends Stage {
     BorderPane bPane;
     ProjectSceneController mController;
     AhpProject mProject;
-    ContextMenu cm = new ContextMenu();;
+    ContextMenu cm = new ContextMenu();
 
     public ProjectSceneView(String title, AhpProject mProject, ProjectSceneController mController){
         this.mController = mController;
@@ -126,7 +126,6 @@ public class ProjectSceneView extends Stage {
         rootNode.getChildren().add(resultNode);
         treeView.setPrefWidth(160);
         initTreeViewClickListener(treeView);
-        treeView.getSelectionModel().select(rootNode);
         bPane.setLeft(treeView);
     }
 
@@ -265,9 +264,9 @@ public class ProjectSceneView extends Stage {
                         }
 
                         ArrayList<Double[]> totalResultVector = new ArrayList<Double[]>();
-                        for (int i = 0; i < alternativeVectors.size(); i++) {
+                        for (int i = 0; i < alternativeVectors.get(0).size(); i++) {
                             Double[] rowSum = new Double[]{0.0, 0.0};
-                            for (int j = 0; j < alternativeVectors.get(i).size(); j++) {
+                            for (int j = 0; j < alternativeVectors.size(); j++) {
                                 rowSum = IntervalArithmetic.sum(rowSum,
                                         IntervalArithmetic.multiply(
                                                 alternativeVectors.get(j).get(i),
@@ -669,7 +668,8 @@ public class ProjectSceneView extends Stage {
         ArrayList<Assumption[][]> alternativeMatrices = mProject.getAlternativeMatrices();
         ArrayList<Assumption[][]> newAlternativeMatrices = new ArrayList<>();
         for (int k = 0; k < alternativeMatrices.size(); k++) {
-            Assumption[][] newMatrix = new Assumption[mProject.getAlternatives().size()][mProject.getAlternatives().size()];
+            Assumption[][] newMatrix = new Assumption[mProject.getAlternatives().size() - 1]
+                    [mProject.getAlternatives().size() - 1];
             Assumption[][] givenMatrix = alternativeMatrices.get(k);
 
             int p = 0;
@@ -739,7 +739,7 @@ public class ProjectSceneView extends Stage {
         changeT1MFs.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                new AssumptionChangeSceneView(mProject).show();
+                new AssumptionChangeSceneView(mProject, mController).show();
             }
         });
         menuSettings.getItems().add(changeT1MFs);

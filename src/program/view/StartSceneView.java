@@ -44,9 +44,13 @@ public class StartSceneView extends Application {
     }
 
 
+    public void updatePreviousTaskList(){
+        bPane.setCenter(generateTasksList());
+    }
+
     private JFXListView<Label> generateTasksList(){
         JFXListView<Label> tasksList = new JFXListView<>();
-        mController = new StartSceneController(tasksList);
+        mController = new StartSceneController(tasksList, this);
         ArrayList<ProjectInfo> infos = (ArrayList<ProjectInfo>) mController.readProjectInfos();
 
         for (ProjectInfo task: infos) {
