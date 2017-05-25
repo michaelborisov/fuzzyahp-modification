@@ -171,7 +171,7 @@ class ValueChangeScene extends Stage{
         Stage stage = this;
         bPane.setCenter(resBox);
         bPane.setBottom(mBox);
-        stage.setTitle("Настройка оценок");
+        stage.setTitle("Слабое преобладание: E2");
         stage.setScene(new Scene(bPane));
     }
 

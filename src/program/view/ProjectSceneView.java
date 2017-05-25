@@ -105,6 +105,7 @@ public class ProjectSceneView extends Stage {
         rootNode.getChildren().add(resultNode);
         treeView.setPrefWidth(160);
         initTreeViewClickListener(treeView);
+        treeView.getSelectionModel().select(rootNode);
         bPane.setLeft(treeView);
     }
 
@@ -156,6 +157,14 @@ public class ProjectSceneView extends Stage {
 
                 if(event.getButton() == MouseButton.PRIMARY){
 
+                    if(selectedItem.getParent() == null){
+                        TextArea tArea = new TextArea();
+                        tArea.setText("Комментарий ...");
+                        tArea.setPadding(new Insets(5));
+                        bPane.setCenter(tArea);
+                        return;
+                    }
+
                     if (selectedItem.getValue().equals("Критерии")) {
                         initCriteriaScene();
                     }
@@ -168,6 +177,15 @@ public class ProjectSceneView extends Stage {
                         }
                     }
                     if (selectedItem.getValue().equals("Результат")){
+
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Обнаружена несогласованность");
+                        alert.setHeaderText("Обнаружена несогласованная матрица");
+                        alert.setContentText("Обнаружена несогласованность матрицы критериев. " +
+                                "Проверьте введённые оценки и повторно нажмите на элемент \"Результат\"");
+
+                        alert.showAndWait();
+
                         ArrayList<ArrayList<IntervalTypeTwoMF>> criteriaMatrix = new ArrayList<ArrayList<IntervalTypeTwoMF>>();
                         for (int i = 0; i <mProject.getCriteriaMatrix().length; i++) {
                             criteriaMatrix.add(new ArrayList<>());
@@ -309,6 +327,13 @@ public class ProjectSceneView extends Stage {
                     mButton.setText(mProject.getCriteriaMatrix()[j-1][i-1].getLabel());
 
                 }
+
+                if(mProject.getCriteriaMatrix()[i-1][j-1] != null){
+                    mButton.setStyle(matrixCellButtonStyle);
+                    mButton.setText(mProject.getCriteriaMatrix()[i-1][j-1].getLabel());
+
+                }
+
                 mButton.setAlignment(Pos.CENTER);
                 mButton.setPadding(new Insets(0, 0, 0, 5));
                 mButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -344,7 +369,6 @@ public class ProjectSceneView extends Stage {
         }
         gridpane.setGridLinesVisible(true);
         gridpane.setPadding(new Insets(5, 5, 5, 50));
-
         TextArea tArea = new TextArea();
         tArea.setText("Комментарий ...");
         tArea.setPadding(new Insets(5));
@@ -471,21 +495,40 @@ public class ProjectSceneView extends Stage {
                     dialog.setHeaderText("Добавьте альтернативу");
                 }
                 dialog.setContentText("Пожалуйста, введите название");
+                Button mButton = (Button)dialog.getDialogPane().lookupButton(ButtonType.OK);
+                mButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        String newName = dialog.getEditor().getText();
+                        if (mProject.getAlternatives().indexOf(newName) != -1 ||
+                                mProject.getCriteria().indexOf(newName) != -1){
+                            event.consume();
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Неправильное название");
+                            alert.setHeaderText("Невозможно добавить элемент с таким именем");
+                            alert.setContentText("Элемент с таким именем уже существует. " +
+                                    "Пожалуйста, введите другое название");
+
+                            alert.showAndWait();
+                        }
+                    }
+                });
                 Optional<String> result = dialog.showAndWait();
-
-
-                if (selectedItem.getValue().equals("Критерии")) {
-                    entities.add(new CriteriaHierarchyEntity(result.get()));
-                }
-                if (selectedItem.getValue().equals("Альтернативы")) {
-                    entities.add(new AlternativeHierarchyEntity(result.get()));
-                }
-                initLeftSideTreeView();
-                if(selectedItem.getValue().equals("Критерии")) {
-                    initCriteriaScene();
+                if (result.isPresent()) {
+                    if (selectedItem.getValue().equals("Критерии")) {
+                        entities.add(new CriteriaHierarchyEntity(result.get()));
+                    }
+                    if (selectedItem.getValue().equals("Альтернативы")) {
+                        entities.add(new AlternativeHierarchyEntity(result.get()));
+                    }
+                    initLeftSideTreeView();
+                    if (selectedItem.getValue().equals("Критерии")) {
+                        initCriteriaScene();
+                    }
                 }
             }
         });
+        cm.getItems().clear();
         cm.getItems().add(cmItem1);
         cm.show(treeView, event.getScreenX(), event.getScreenY());
     }
@@ -548,18 +591,25 @@ public class ProjectSceneView extends Stage {
                     }
                 }
                 if(toDelete != null) {
-                    ArrayList<String> q = mProject.getCriteria();
-                    String w = toDelete.getName();
-                    int e = q.indexOf(w);
-                    int indexToDelete = mProject.getCriteria().indexOf(toDelete.getName());
-                    if(selectedItem.getParent().getValue().equals("Критерии")) {
-                        modifyCriteriaMatrix(indexToDelete);
+                    ArrayList<String> criteria = mProject.getCriteria();
+                    int ind = criteria.indexOf(toDelete.getName());
+                    if (ind > -1) {
+                        if (selectedItem.getParent().getValue().equals("Критерии")) {
+                            modifyCriteriaMatrix(ind);
+                        }
+                    }else{
+                        ind = mProject.getAlternatives().indexOf(toDelete.getName());
+                        modifyAlternativeMatrices(ind);
                     }
+
                     entities.remove(toDelete);
                 }
                 initLeftSideTreeView();
                 if(selectedItem.getParent().getValue().equals("Критерии")) {
                     initCriteriaScene();
+                }
+                if(selectedItem.getParent().getValue().equals("Альтернативы")) {
+                    initSpecificCriterionScene(0);
                 }
             }
         });
@@ -590,6 +640,34 @@ public class ProjectSceneView extends Stage {
         }
 
         mProject.setCriteriaMatrix(newMatrix);
+    }
+
+    private void modifyAlternativeMatrices(int indexToDelete){
+        ArrayList<Assumption[][]> alternativeMatrices = mProject.getAlternativeMatrices();
+        ArrayList<Assumption[][]> newAlternativeMatrices = new ArrayList<>();
+        for (int k = 0; k < alternativeMatrices.size(); k++) {
+            Assumption[][] newMatrix = new Assumption[mProject.getAlternatives().size()][mProject.getAlternatives().size()];
+            Assumption[][] givenMatrix = alternativeMatrices.get(k);
+
+            int p = 0;
+            for (int i = 0; i < givenMatrix.length; i++) {
+                if ( i == indexToDelete){
+                    continue;
+                }
+                int q = 0;
+                for (int j = 0; j < givenMatrix[i].length; j++) {
+                    if ( j == indexToDelete) {
+                        continue;
+                    }
+                    newMatrix[p][q] = givenMatrix[i][j];
+                    q++;
+                }
+                p++;
+            }
+
+            newAlternativeMatrices.add(newMatrix);
+        }
+        mProject.setAlternativeMatrices(newAlternativeMatrices);
     }
 
     private void generateMenuBar(){

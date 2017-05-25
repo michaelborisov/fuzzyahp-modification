@@ -2,6 +2,7 @@ package program.controller;
 
 import com.google.gson.Gson;
 import fuzzy.TypeOneMF;
+import javafx.scene.control.Alert;
 import program.model.*;
 import program.view.ProjectSceneView;
 
@@ -33,13 +34,28 @@ public class ProjectSceneController {
                     initTestProject();
                 }
             }catch (Exception ex){
-                ex.printStackTrace();
-                mProject = new AhpProject();
-                initTestProject();
+                //ex.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ошибка при загрузке проекта");
+                alert.setHeaderText("При загрузке проекта произошла ошибка");
+                alert.setContentText("При чтении файла проекта произошла ошибка: файл повреждён. " +
+                        "Загрузка проекта невозможна");
+
+                alert.showAndWait();
+//                return;
+//                mProject = new AhpProject();
+//                initTestProject();
             }
         }else{
-            mProject = new AhpProject();
-            initTestProject();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ошибка при загрузке проекта");
+            alert.setHeaderText("При загрузке проекта произошла ошибка");
+            alert.setContentText("Файл проекта не найден. Проверьте, не был ли файл перемещён или удалён");
+
+            alert.showAndWait();
+//            return;
+//            mProject = new AhpProject();
+//            initTestProject();
         }
         ProjectSceneView mView = new ProjectSceneView(projectTitle, mProject, this);
         mView.show();

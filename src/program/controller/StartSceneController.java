@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class StartSceneController implements Initializable {
 
@@ -50,8 +51,12 @@ public class StartSceneController implements Initializable {
                     }
                 }
                 if(event.getClickCount() == 2){
-                    new ProjectSceneController(projectPath , selectedTitle);
-                    tasksList.getScene().getWindow().hide();
+                    try {
+                        new ProjectSceneController(projectPath, selectedTitle);
+                        tasksList.getScene().getWindow().hide();
+                    }catch (Exception e){
+
+                    }
                 }
             }
         });
@@ -73,6 +78,7 @@ public class StartSceneController implements Initializable {
         System.out.println(res);
         Matrix m = res.getD();
         Matrix n = res.getV();
+
         JFXButton addButton = new JFXButton("+");
         addButton.setButtonType(JFXButton.ButtonType.RAISED);
         addButton.setStyle(addButtonStyle);
