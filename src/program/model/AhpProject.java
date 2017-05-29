@@ -53,6 +53,9 @@ public class AhpProject {
     }
 
     public HashMap<String, String> getDescriptionMap() {
+        if (descriptionMap == null){
+            descriptionMap = new HashMap<>();
+        }
         return descriptionMap;
     }
 

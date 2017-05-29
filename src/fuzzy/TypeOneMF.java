@@ -5,7 +5,7 @@ import type1.sets.T1MF_Triangular;
 /**
  * Created by michaelborisov on 26.03.17.
  */
-public class TypeOneMF {
+public class TypeOneMF implements AbstractMF<TypeOneMF>{
 
     public double getLowerBound() {
         return lowerBound;
@@ -33,6 +33,9 @@ public class TypeOneMF {
         this.upperBound = upperBound;
     }
 
+    public double getDefuzzifiedValue(){
+        return middle;
+    }
     public static double calculateHeightOfIntersection(TypeOneMF first, TypeOneMF second){
         if(first.getMiddle() > second.getMiddle()){
             return 1.0;

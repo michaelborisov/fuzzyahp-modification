@@ -45,10 +45,11 @@ public class AssumptionSceneView extends Stage {
     private HashMap<JFXRadioButton, TypeOneMF> confidence = new HashMap<>();
 
     public AssumptionSceneView(int row, int column, AhpProject project){
+        this.mProject = project;
         generateRadioButtonScene();
         this.row = row;
         this.column = column;
-        this.mProject = project;
+
     }
 
     private void generateRadioButtonScene(){

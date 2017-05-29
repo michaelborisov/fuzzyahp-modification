@@ -5,7 +5,7 @@ import intervalType2.sets.IntervalT2MF_Triangular;
 /**
  * Created by michaelborisov on 26.03.17.
  */
-public class IntervalTypeTwoMF {
+public class IntervalTypeTwoMF implements AbstractMF<IntervalTypeTwoMF>{
 
     public IntervalTypeTwoMF(TypeOneMF lowerMF, TypeOneMF upperMF){
         this.lowerMF = lowerMF;
@@ -20,6 +20,7 @@ public class IntervalTypeTwoMF {
         return upperMF;
     }
 
+    @Override
     public IntervalTypeTwoMF getReciprocal(){
         return new IntervalTypeTwoMF(lowerMF.getReciprocal(), upperMF.getReciprocal());
     }

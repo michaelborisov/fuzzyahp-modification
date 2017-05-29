@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXTreeView;
 import fuzzy.IntervalTypeTwoMF;
 import fuzzy.TypeOneMF;
 import helper.IntervalArithmetic;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -179,7 +181,21 @@ public class ProjectSceneView extends Stage {
 
                     if(selectedItem.getParent() == null){
                         TextArea tArea = new TextArea();
-                        tArea.setText("Комментарий ...");
+                        String criteriaComment = mProject.getDescriptionMap().get("Цель");
+                        if (criteriaComment == null){
+                            tArea.setText("Комментарий ...");
+                        }else{
+                            tArea.setText(criteriaComment);
+                        }
+                        tArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                            @Override
+                            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                                if(!newValue){
+                                    mProject.getDescriptionMap().put("Цель", tArea.getText());
+                                    mController.saveProjectToFile();
+                                }
+                            }
+                        });
                         tArea.setPadding(new Insets(5));
                         bPane.setCenter(tArea);
                         return;
@@ -198,13 +214,13 @@ public class ProjectSceneView extends Stage {
                     }
                     if (selectedItem.getValue().equals("Результат")){
 
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Обнаружена несогласованность");
-                        alert.setHeaderText("Обнаружена несогласованная матрица");
-                        alert.setContentText("Обнаружена несогласованность матрицы критериев. " +
-                                "Проверьте введённые оценки и повторно нажмите на элемент \"Результат\"");
-
-                        alert.showAndWait();
+//                        Alert alert = new Alert(Alert.AlertType.ERROR);
+//                        alert.setTitle("Обнаружена несогласованность");
+//                        alert.setHeaderText("Обнаружена несогласованная матрица");
+//                        alert.setContentText("Обнаружена несогласованность матрицы критериев. " +
+//                                "Проверьте введённые оценки и повторно нажмите на элемент \"Результат\"");
+//
+//                        alert.showAndWait();
 
                         ArrayList<ArrayList<IntervalTypeTwoMF>> criteriaMatrix = new ArrayList<ArrayList<IntervalTypeTwoMF>>();
                         for (int i = 0; i <mProject.getCriteriaMatrix().length; i++) {
@@ -391,7 +407,21 @@ public class ProjectSceneView extends Stage {
         gridpane.setGridLinesVisible(true);
         gridpane.setPadding(new Insets(5, 5, 5, 50));
         TextArea tArea = new TextArea();
-        tArea.setText("Комментарий ...");
+        String criteriaComment = mProject.getDescriptionMap().get("Критерии");
+        if (criteriaComment == null){
+            tArea.setText("Комментарий ...");
+        }else{
+            tArea.setText(criteriaComment);
+        }
+        tArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(!newValue){
+                    mProject.getDescriptionMap().put("Критерии", tArea.getText());
+                    mController.saveProjectToFile();
+                }
+            }
+        });
         tArea.setPadding(new Insets(5));
 
         VBox vBox = new VBox();
@@ -491,7 +521,21 @@ public class ProjectSceneView extends Stage {
         gridpane.setPadding(new Insets(5, 5, 5, 50));
 
         TextArea tArea = new TextArea();
-        tArea.setText("Комментарий ...");
+        String criteriaComment = mProject.getDescriptionMap().get(mProject.getCriteria().get(criteriaIndex));
+        if (criteriaComment == null){
+            tArea.setText("Комментарий ...");
+        }else{
+            tArea.setText(criteriaComment);
+        }
+        tArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(!newValue){
+                    mProject.getDescriptionMap().put(mProject.getCriteria().get(criteriaIndex), tArea.getText());
+                    mController.saveProjectToFile();
+                }
+            }
+        });
         tArea.setPadding(new Insets(5));
 
         VBox vBox = new VBox();
@@ -523,7 +567,11 @@ public class ProjectSceneView extends Stage {
                     public void handle(ActionEvent event) {
                         String newName = dialog.getEditor().getText();
                         if (mProject.getAlternatives().indexOf(newName) != -1 ||
-                                mProject.getCriteria().indexOf(newName) != -1){
+                                mProject.getCriteria().indexOf(newName) != -1 ||
+                                newName.equals("Критерии") ||
+                                newName.equals("Альтернативы") ||
+                                newName.equals("Цель") ||
+                                newName.equals("Результат")){
                             event.consume();
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Неправильное название");
@@ -587,7 +635,7 @@ public class ProjectSceneView extends Stage {
                     if(selectedItem.getParent().getValue().equals("Критерии")){
                         entities.add(entities.indexOf(toDelete), new CriteriaHierarchyEntity(result.get()));
                     }else{
-                        entities.add(new AlternativeHierarchyEntity(result.get()));
+                        entities.add(entities.indexOf(toDelete), new AlternativeHierarchyEntity(result.get()));
                     }
                     if(toDelete != null) {
                         entities.remove(toDelete);
