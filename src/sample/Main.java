@@ -1,6 +1,6 @@
 package sample;
 
-import ahp.IntervalTypeTwoAHPMatrix;
+import ahp.IntervalTypeTwoAhpMatrix;
 import com.jfoenix.controls.*;
 import fuzzy.Alternative;
 import javafx.application.Application;
@@ -23,18 +23,14 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import org.fxmisc.richtext.StyledTextArea;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static java.util.Arrays.copyOf;
 
 public class Main extends Application {
@@ -73,8 +69,8 @@ public class Main extends Application {
             System.out.println(path);
             for (double b = 0.5; b < 1; b += 0.01) {
                 helper.Settings.BOUNDARY_VALUE = b;
-                IntervalTypeTwoAHPMatrix ahp = new IntervalTypeTwoAHPMatrix(path);
-                ahp.calculateEigenValue();
+                IntervalTypeTwoAhpMatrix ahp = new IntervalTypeTwoAhpMatrix(path);
+                //ahp.calculateEigenValue();
                 ArrayList<Alternative> alternatives = ahp.calculateResultVector();
                 System.out.print(String.format("%.2f: ", b));
                 for (int i = 0; i < alternatives.size(); i++) {

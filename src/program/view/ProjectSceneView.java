@@ -1,11 +1,8 @@
 package program.view;
 
-import ahp.IntervalTypeTwoAHPMatrix;
+import ahp.IntervalTypeTwoAhp;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeView;
-import fuzzy.IntervalTypeTwoMF;
-import fuzzy.TypeOneMF;
-import helper.IntervalArithmetic;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -127,6 +124,7 @@ public class ProjectSceneView extends Stage {
         TreeItem<String> resultNode = new TreeItem<>("Результат");
         rootNode.getChildren().add(resultNode);
         treeView.setPrefWidth(160);
+        treeView.setPrefHeight(750);
         initTreeViewClickListener(treeView);
         bPane.setLeft(treeView);
     }
@@ -222,77 +220,8 @@ public class ProjectSceneView extends Stage {
 //
 //                        alert.showAndWait();
 
-                        ArrayList<ArrayList<IntervalTypeTwoMF>> criteriaMatrix = new ArrayList<ArrayList<IntervalTypeTwoMF>>();
-                        for (int i = 0; i <mProject.getCriteriaMatrix().length; i++) {
-                            criteriaMatrix.add(new ArrayList<>());
-                            for (int j = 0; j < mProject.getCriteriaMatrix()[i].length; j++) {
-                                if(j < i){
-                                    criteriaMatrix.get(i).add(criteriaMatrix.get(j).get(i).getReciprocal());
-                                }else{
-                                    if(mProject.getCriteriaMatrix()[i][j] == null) {
-                                        criteriaMatrix.get(i).add(
-                                                new IntervalTypeTwoMF(
-                                                        new TypeOneMF(1, 1, 1),
-                                                        new TypeOneMF(1, 1, 1)
-                                                )
-                                        );
-                                    }else{
-                                        criteriaMatrix.get(i).add(mProject.getCriteriaMatrix()[i][j].convertT1MFtoIT2MF());
-                                    }
-                                }
-                            }
-
-                        }
-                        IntervalTypeTwoAHPMatrix ahp = new IntervalTypeTwoAHPMatrix(criteriaMatrix);
-                        ArrayList<Double[]> criteriaVector = ahp.calculateIntervalVector();
-
-                        ArrayList<ArrayList<ArrayList<IntervalTypeTwoMF>>> alternativeMatricesList = new ArrayList<ArrayList<ArrayList<IntervalTypeTwoMF>>>();
-                        for (int k = 0; k < mProject.getAlternativeMatrices().size(); k++) {
-                            alternativeMatricesList.add(new ArrayList<>());
-                            for (int i = 0; i < mProject.getAlternativeMatrices().get(k).length; i++) {
-                                alternativeMatricesList.get(k).add(new ArrayList<>());
-                                for (int j = 0; j < mProject.getAlternativeMatrices().get(k)[i].length; j++) {
-                                    if(j < i){
-                                        alternativeMatricesList.get(k).get(i).add(
-                                                alternativeMatricesList.get(k).get(j).get(i).getReciprocal()
-                                        );
-                                    }else{
-                                        if(mProject.getAlternativeMatrices().get(k)[i][j] == null) {
-                                            alternativeMatricesList.get(k).get(i).add(
-                                                    new IntervalTypeTwoMF(
-                                                            new TypeOneMF(1, 1, 1),
-                                                            new TypeOneMF(1, 1, 1)
-                                                    )
-                                            );
-                                        }else{
-                                            alternativeMatricesList.get(k).get(i).add(
-                                                    mProject.getAlternativeMatrices().get(k)[i][j].convertT1MFtoIT2MF()
-                                            );
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        ArrayList<ArrayList<Double[]>> alternativeVectors = new ArrayList<ArrayList<Double[]>>();
-                        for (ArrayList<ArrayList<IntervalTypeTwoMF>> alternativeMatrix: alternativeMatricesList) {
-                            ahp = new IntervalTypeTwoAHPMatrix(alternativeMatrix);
-                            alternativeVectors.add(ahp.calculateIntervalVector());
-                        }
-
-                        ArrayList<Double[]> totalResultVector = new ArrayList<Double[]>();
-                        for (int i = 0; i < alternativeVectors.get(0).size(); i++) {
-                            Double[] rowSum = new Double[]{0.0, 0.0};
-                            for (int j = 0; j < alternativeVectors.size(); j++) {
-                                rowSum = IntervalArithmetic.sum(rowSum,
-                                        IntervalArithmetic.multiply(
-                                                alternativeVectors.get(j).get(i),
-                                                criteriaVector.get(j)
-                                        )
-                                );
-                            }
-                            totalResultVector.add(rowSum);
-                        }
-                        totalResultVector = ahp.normalizeVector(totalResultVector);
+                        IntervalTypeTwoAhp mAhp = new IntervalTypeTwoAhp(mProject);
+                        ArrayList<Double []>totalResultVector = mAhp.calculateTotalResultVector();
                         ArrayList<Double> crispValues = new ArrayList<Double>();
                         for (int i = 0; i < totalResultVector.size(); i++) {
                             crispValues.add((totalResultVector.get(i)[0] + totalResultVector.get(i)[1])/2.0);
@@ -311,7 +240,6 @@ public class ProjectSceneView extends Stage {
                         }
                         bc.getData().addAll(series1);
                         bPane.setCenter(bc);
-                        System.out.println(alternativeVectors);
                     }
                 }
                 if(event.getButton() == MouseButton.SECONDARY){
@@ -329,6 +257,8 @@ public class ProjectSceneView extends Stage {
     private void initCriteriaScene(){
         ScrollPane sPane = new ScrollPane();
         GridPane gridpane = new GridPane();
+        sPane.setStyle("-fx-background-color:#FFF");
+        gridpane.setStyle("-fx-background-color:#FFF");
         sPane.setContent(gridpane);
         for (int i = 0; i < mProject.getCriteria().size() + 1; i++) {
             RowConstraints row = new RowConstraints(50);
@@ -386,6 +316,9 @@ public class ProjectSceneView extends Stage {
                             public void handle(WindowEvent event) {
 
                                 Assumption mAssumption = mAssumptionView.getAssumption();
+                                if (mAssumption == null){
+                                    return;
+                                }
                                 mProject.getCriteriaMatrix()[GridPane.getRowIndex(mButton) - 1]
                                         [GridPane.getColumnIndex(mButton) - 1] = mAssumption;
                                 mController.saveProjectToFile();
@@ -405,7 +338,7 @@ public class ProjectSceneView extends Stage {
             }
         }
         gridpane.setGridLinesVisible(true);
-        gridpane.setPadding(new Insets(5, 5, 5, 50));
+        gridpane.setPadding(new Insets(5, 5, 5, 5));
         TextArea tArea = new TextArea();
         String criteriaComment = mProject.getDescriptionMap().get("Критерии");
         if (criteriaComment == null){
@@ -423,7 +356,6 @@ public class ProjectSceneView extends Stage {
             }
         });
         tArea.setPadding(new Insets(5));
-
         VBox vBox = new VBox();
         vBox.setSpacing(10);
         vBox.getChildren().addAll(sPane, tArea);
@@ -433,6 +365,14 @@ public class ProjectSceneView extends Stage {
     private void initSpecificCriterionScene(int criteriaIndex){
         GridPane gridpane = new GridPane();
         ScrollPane sPane = new ScrollPane();
+        sPane.setStyle("-fx-background-color:#FFF");
+        gridpane.setStyle("-fx-background-color:#FFF");
+        sPane.setHvalue(0.5);
+        sPane.setVvalue(0.5);
+        gridpane.setAlignment(Pos.TOP_CENTER);
+        sPane.setHvalue(200);
+
+        bPane.setStyle(("-fx-background-color:#FFF"));
         sPane.setContent(gridpane);
         for (int i = 0; i < mProject.getAlternatives().size() + 1; i++) {
             RowConstraints row = new RowConstraints(50);
@@ -480,7 +420,9 @@ public class ProjectSceneView extends Stage {
                             public void handle(WindowEvent event) {
 
                                 Assumption mAssumption = mAssumptionView.getAssumption();
-
+                                if(mAssumption == null){
+                                    return;
+                                }
                                 mProject.getAlternativeMatrices().get(criteriaIndex)[GridPane.getRowIndex(mButton) - 1]
                                         [GridPane.getColumnIndex(mButton) - 1] = mAssumption;
 
@@ -517,8 +459,14 @@ public class ProjectSceneView extends Stage {
                 gridpane.add(mButton, i, j);
             }
         }
+
         gridpane.setGridLinesVisible(true);
-        gridpane.setPadding(new Insets(5, 5, 5, 50));
+        if(mProject.getAlternatives().size() <=3 ) {
+            gridpane.setPadding(new Insets(5, 5, 5, 50));
+        }else{
+            gridpane.setPadding(new Insets(5));
+        }
+        bPane.getCenter().setStyle("-fx-background-color:#FFF");
 
         TextArea tArea = new TextArea();
         String criteriaComment = mProject.getDescriptionMap().get(mProject.getCriteria().get(criteriaIndex));
@@ -541,6 +489,7 @@ public class ProjectSceneView extends Stage {
         VBox vBox = new VBox();
         vBox.setSpacing(10);
         vBox.getChildren().addAll(sPane, tArea);
+        vBox.setStyle(("-fx-background-color:#FFF"));
         bPane.setCenter(vBox);
     }
 

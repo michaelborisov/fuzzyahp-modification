@@ -34,7 +34,8 @@ public class TypeOneMF implements AbstractMF<TypeOneMF>{
     }
 
     public double getDefuzzifiedValue(){
-        return middle;
+        T1MF_Triangular v = new T1MF_Triangular("Anonymous", lowerBound, middle, upperBound);
+        return v.getDefuzzifiedCentroid(100);
     }
     public static double calculateHeightOfIntersection(TypeOneMF first, TypeOneMF second){
         if(first.getMiddle() > second.getMiddle()){
