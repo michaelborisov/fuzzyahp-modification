@@ -125,6 +125,25 @@ public class AssumptionChangeSceneView extends Stage {
                 }
             }
         }
+
+        for (int k = 0; k < mProject.getAlternativeMatrices().size(); k++) {
+            for (int i = 0; i < mProject.getAlternativeMatrices().get(k).length; i++) {
+                for (int j = 0; j < mProject.getAlternativeMatrices().get(k)[i].length; j++) {
+                    if(mProject.getAlternativeMatrices().get(k)[i][j] == null){
+                        continue;
+                    }
+                    if(isExpectation) {
+                        if (mProject.getAlternativeMatrices().get(k)[i][j].getExpectation().equals(oldValue)) {
+                            mProject.getAlternativeMatrices().get(k)[i][j].setExpectation(newValue);
+                        }
+                    }else{
+                        if (mProject.getAlternativeMatrices().get(k)[i][j].getConfidence().equals(oldValue)) {
+                            mProject.getAlternativeMatrices().get(k)[i][j].setConfidence(newValue);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private VBox generateConfidenceButtons(){
