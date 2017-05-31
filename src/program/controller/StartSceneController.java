@@ -84,21 +84,6 @@ public class StartSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //DELETE BELOW
-        double[][] mMatrix = new double[][]{
-                new double[]{1, 1.602, 1.076, 1.626, 1.843},
-                new double[]{0.625, 1, 3.294, 1.104, 2.784},
-                new double[]{0.93, 0.242, 1, 1.116, 1.17},
-                new double[]{0.615, 0.72, 0.713, 1, 1.06},
-                new double[]{0.543, 0.359, 0.855, 0.944,1}
-        };
-        Matrix a = new Matrix(mMatrix);
-        EigenvalueDecomposition res = a.eig();
-        double vectors = res.getD().get(0, 0);
-        System.out.println(res);
-        Matrix m = res.getD();
-        Matrix n = res.getV();
-
         JFXButton addButton = new JFXButton("+");
         addButton.setButtonType(JFXButton.ButtonType.RAISED);
         addButton.setStyle(addButtonStyle);
