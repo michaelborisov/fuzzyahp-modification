@@ -169,6 +169,27 @@ public class ProjectSceneView extends Stage {
         mController.saveProjectToFile();
     }
 
+    private void initDescriptionScene(String key){
+        TextArea tArea = new TextArea();
+        String criteriaComment = mProject.getDescriptionMap().get(key);
+        if (criteriaComment == null){
+            tArea.setText("Комментарий ...");
+        }else{
+            tArea.setText(criteriaComment);
+        }
+        tArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(!newValue){
+                    mProject.getDescriptionMap().put(key, tArea.getText());
+                    mController.saveProjectToFile();
+                }
+            }
+        });
+        tArea.setPadding(new Insets(5));
+        bPane.setCenter(tArea);
+    }
+
     private void initTreeViewClickListener(JFXTreeView<String> treeView){
         treeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -178,24 +199,12 @@ public class ProjectSceneView extends Stage {
                 if(event.getButton() == MouseButton.PRIMARY){
 
                     if(selectedItem.getParent() == null){
-                        TextArea tArea = new TextArea();
-                        String criteriaComment = mProject.getDescriptionMap().get("Цель");
-                        if (criteriaComment == null){
-                            tArea.setText("Комментарий ...");
-                        }else{
-                            tArea.setText(criteriaComment);
-                        }
-                        tArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                            @Override
-                            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                                if(!newValue){
-                                    mProject.getDescriptionMap().put("Цель", tArea.getText());
-                                    mController.saveProjectToFile();
-                                }
-                            }
-                        });
-                        tArea.setPadding(new Insets(5));
-                        bPane.setCenter(tArea);
+                        initDescriptionScene("Цель");
+                        return;
+                    }
+
+                    if (selectedItem.getParent().getValue().equals("Альтернативы")){
+                        initDescriptionScene(selectedItem.getValue());
                         return;
                     }
 
@@ -593,6 +602,10 @@ public class ProjectSceneView extends Stage {
                     if(toDelete != null) {
                         entities.remove(toDelete);
                     }
+                    mProject.getDescriptionMap().put(
+                            result.get(),
+                            mProject.getDescriptionMap().remove(selectedItem.getValue())
+                    );
                     initLeftSideTreeView();
 
                     if(selectedItem.getParent().getValue().equals("Критерии")) {
