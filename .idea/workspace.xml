@@ -7,30 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/META-INF/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Asymmetric_1.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Asymmetric_2.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Asymmetric_3.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Asymmetric_4.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_1.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_2.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_3.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_4.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_5.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_6.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_7.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/Symmetric_8.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/sample.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/sample/~$Books.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jar-file 2/out/production/borisov.bachelor/styles/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TreeViewDemo.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Выбор школы — копия 2" afterPath="$PROJECT_DIR$/Выбор школы — копия 2" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAhp.java" afterPath="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAhp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fuzzy/TypeOneMF.java" afterPath="$PROJECT_DIR$/src/fuzzy/TypeOneMF.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/program/model/Assumption.java" afterPath="$PROJECT_DIR$/src/program/model/Assumption.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/Settings.java" afterPath="$PROJECT_DIR$/src/helper/Settings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" afterPath="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sample/Main.java" afterPath="$PROJECT_DIR$/src/sample/Main.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -106,36 +87,18 @@
       <file leaf-file-name="IntervalTypeTwoAhp.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ahp/IntervalTypeTwoAhp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
+            <state relative-caret-position="205">
+              <caret line="90" column="27" selection-start-line="90" selection-start-column="27" selection-end-line="90" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#IntervalTypeTwoAhp#0;class#IntervalTypeTwoAhp#0" expanded="false" />
                 <element signature="method#calculateTotalResultVector#0;class#IntervalTypeTwoAhp#0" expanded="false" />
-                <element signature="e#1551#1581#0" expanded="true" />
+                <element signature="method#calculateCriteriaVector#0;class#IntervalTypeTwoAhp#0" expanded="false" />
+                <element signature="e#1703#1733#0" expanded="true" />
                 <element signature="method#calculateAlternativeVectors#0;class#IntervalTypeTwoAhp#0" expanded="false" />
-                <element signature="e#3394#3435#0" expanded="true" />
-                <element signature="e#4926#4947#0" expanded="true" />
+                <element signature="e#6430#6471#0" expanded="true" />
+                <element signature="e#8007#8028#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StartSceneView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/program/view/StartSceneView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-285">
-              <caret line="37" column="29" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StartSceneController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/program/controller/StartSceneController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="46" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -143,11 +106,21 @@
       <file leaf-file-name="ProjectSceneView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="226" column="76" selection-start-line="226" selection-start-column="76" selection-end-line="226" selection-end-column="76" />
+            <state relative-caret-position="220">
+              <caret line="223" column="35" selection-start-line="223" selection-start-column="35" selection-end-line="223" selection-end-column="35" />
               <folding>
-                <element signature="e#9454#9462#0" expanded="true" />
+                <element signature="e#9588#9596#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Settings.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/helper/Settings.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -203,7 +176,6 @@
         <option value="$PROJECT_DIR$/src/program/model/CriteriaHierarchyEntity.java" />
         <option value="$PROJECT_DIR$/src/program/model/BaseHierarchyEntity.java" />
         <option value="$PROJECT_DIR$/src/helper/ExcelFileParser.java" />
-        <option value="$PROJECT_DIR$/src/helper/Settings.java" />
         <option value="$PROJECT_DIR$/src/helper/IntervalArithmetic.java" />
         <option value="$PROJECT_DIR$/src/program/model/ProjectInfo.java" />
         <option value="$PROJECT_DIR$/src/program/view/AssumptionChangeSceneView.java" />
@@ -220,6 +192,7 @@
         <option value="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAHP.java" />
         <option value="$PROJECT_DIR$/src/program/model/Assumption.java" />
         <option value="$PROJECT_DIR$/src/program/view/ProjectSceneView.java" />
+        <option value="$PROJECT_DIR$/src/helper/Settings.java" />
         <option value="$PROJECT_DIR$/src/ahp/IntervalTypeTwoAhp.java" />
       </list>
     </option>
@@ -973,12 +946,12 @@
       <workItem from="1493105438718" duration="245000" />
       <workItem from="1493578868433" duration="7257000" />
       <workItem from="1494069475999" duration="69206000" />
-      <workItem from="1495025694195" duration="59137000" />
+      <workItem from="1495025694195" duration="63700000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211811000" />
+    <option name="totallyTimeSpent" value="216374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -992,7 +965,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1004,7 +977,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3989071" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3989071" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1045,13 +1018,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>658</line>
+          <line>662</line>
           <properties />
           <option name="timeStamp" value="88" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>641</line>
+          <line>645</line>
           <properties />
           <option name="timeStamp" value="90" />
         </line-breakpoint>
@@ -1081,13 +1054,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>534</line>
+          <line>538</line>
           <properties />
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>512</line>
+          <line>516</line>
           <properties />
           <option name="timeStamp" value="144" />
         </line-breakpoint>
@@ -1099,13 +1072,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>664</line>
+          <line>668</line>
           <properties />
           <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java</url>
-          <line>689</line>
+          <line>693</line>
           <properties />
           <option name="timeStamp" value="158" />
         </line-breakpoint>
@@ -1157,14 +1130,8 @@
           <properties />
           <option name="timeStamp" value="172" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ahp/IntervalTypeTwoAhp.java</url>
-          <line>72</line>
-          <properties />
-          <option name="timeStamp" value="177" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="178" />
+      <option name="time" value="180" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -1422,22 +1389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/helper/IntervalArithmetic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helper/Settings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/program/controller/AssumptionChangeSceneController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1617,6 +1568,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/IntervalArithmetic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="69" column="52" selection-start-line="69" selection-start-column="52" selection-end-line="69" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/program/controller/StartSceneController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1625,27 +1584,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/program/view/ProjectSceneView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="226" column="76" selection-start-line="226" selection-start-column="76" selection-end-line="226" selection-end-column="76" />
+        <state relative-caret-position="220">
+          <caret line="223" column="35" selection-start-line="223" selection-start-column="35" selection-end-line="223" selection-end-column="35" />
           <folding>
-            <element signature="e#9454#9462#0" expanded="true" />
+            <element signature="e#9588#9596#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ahp/IntervalTypeTwoAhp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
+        <state relative-caret-position="205">
+          <caret line="90" column="27" selection-start-line="90" selection-start-column="27" selection-end-line="90" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#IntervalTypeTwoAhp#0;class#IntervalTypeTwoAhp#0" expanded="false" />
             <element signature="method#calculateTotalResultVector#0;class#IntervalTypeTwoAhp#0" expanded="false" />
-            <element signature="e#1551#1581#0" expanded="true" />
+            <element signature="method#calculateCriteriaVector#0;class#IntervalTypeTwoAhp#0" expanded="false" />
+            <element signature="e#1703#1733#0" expanded="true" />
             <element signature="method#calculateAlternativeVectors#0;class#IntervalTypeTwoAhp#0" expanded="false" />
-            <element signature="e#3394#3435#0" expanded="true" />
-            <element signature="e#4926#4947#0" expanded="true" />
+            <element signature="e#6430#6471#0" expanded="true" />
+            <element signature="e#8007#8028#0" expanded="true" />
           </folding>
         </state>
       </provider>

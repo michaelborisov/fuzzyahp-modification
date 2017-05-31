@@ -212,16 +212,20 @@ public class ProjectSceneView extends Stage {
                     }
                     if (selectedItem.getValue().equals("Результат")){
 
-//                        Alert alert = new Alert(Alert.AlertType.ERROR);
-//                        alert.setTitle("Обнаружена несогласованность");
-//                        alert.setHeaderText("Обнаружена несогласованная матрица");
-//                        alert.setContentText("Обнаружена несогласованность матрицы критериев. " +
-//                                "Проверьте введённые оценки и повторно нажмите на элемент \"Результат\"");
-//
-//                        alert.showAndWait();
-
                         IntervalTypeTwoAhp mAhp = new IntervalTypeTwoAhp(mProject);
-                        ArrayList<Double []>totalResultVector = mAhp.calculateTotalResultVector();
+                        if(!mAhp.isAllMatricesConsistent()){
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Обнаружена несогласованность");
+                            alert.setHeaderText("Обнаружена несогласованная матрица");
+                            alert.setContentText("Обнаружена несогласованность матрицы критериев. " +
+                                    "Проверьте введённые оценки и повторно нажмите на элемент \"Результат\"");
+
+                            alert.showAndWait();
+                            return;
+
+                        }
+
+                        ArrayList<Double[]> totalResultVector = mAhp.calculateTotalResultVector();
                         ArrayList<Double> crispValues = new ArrayList<Double>();
                         for (int i = 0; i < totalResultVector.size(); i++) {
                             crispValues.add((totalResultVector.get(i)[0] + totalResultVector.get(i)[1])/2.0);
