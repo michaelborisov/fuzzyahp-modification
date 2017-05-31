@@ -37,6 +37,7 @@ public class TypeOneMF implements AbstractMF<TypeOneMF>{
         T1MF_Triangular v = new T1MF_Triangular("Anonymous", lowerBound, middle, upperBound);
         return v.getDefuzzifiedCentroid(100);
     }
+
     public static double calculateHeightOfIntersection(TypeOneMF first, TypeOneMF second){
         if(first.getMiddle() > second.getMiddle()){
             return 1.0;
@@ -52,4 +53,13 @@ public class TypeOneMF implements AbstractMF<TypeOneMF>{
         return res;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof TypeOneMF)){
+            return false;
+        }
+        return (this.lowerBound == ((TypeOneMF) obj).lowerBound &&
+                this.middle == ((TypeOneMF) obj).middle &&
+                this.upperBound == ((TypeOneMF) obj).upperBound);
+    }
 }

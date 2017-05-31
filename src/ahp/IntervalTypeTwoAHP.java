@@ -88,7 +88,7 @@ public class IntervalTypeTwoAhp {
         double maxEigenValue = dec.getD().get(0, 0);
         double ci = (maxEigenValue - matrix.length) / (matrix.length - 1);
         double cr = ci / randomIndexes.get(matrix.length);
-        if(cr < Settings.CR) {
+        if(cr < 0.2) {
             return true;
         }else{
             return false;

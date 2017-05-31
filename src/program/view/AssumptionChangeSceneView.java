@@ -89,13 +89,16 @@ public class AssumptionChangeSceneView extends Stage {
                     mChangeScene.showAndWait();
                     TypeOneMF changedValue = mChangeScene.getNewValue();
                     if (changedValue != null) {
+                        updateAssumptionsInProject(isExpectation, mProject.getExpectations().get(i), changedValue);
                         mProject.getExpectations().set(i, changedValue);
+
                     }
                 }else{
                     ValueChangeScene mChangeScene = new ValueChangeScene(mProject.getConfDegrees().get(i), mButton.getText());
                     mChangeScene.showAndWait();
                     TypeOneMF changedValue = mChangeScene.getNewValue();
                     if (changedValue != null) {
+                        updateAssumptionsInProject(isExpectation, mProject.getConfDegrees().get(i), changedValue);
                         mProject.getConfDegrees().set(i, changedValue);
                     }
                 }
@@ -104,6 +107,25 @@ public class AssumptionChangeSceneView extends Stage {
         });
     }
 
+    private void updateAssumptionsInProject(boolean isExpectation, TypeOneMF oldValue, TypeOneMF newValue){
+
+        for (int i = 0; i < mProject.getCriteriaMatrix().length; i++) {
+            for (int j = 0; j < mProject.getCriteriaMatrix()[i].length; j++) {
+                if(mProject.getCriteriaMatrix()[i][j] == null){
+                    continue;
+                }
+                if(isExpectation) {
+                    if (mProject.getCriteriaMatrix()[i][j].getExpectation().equals(oldValue)) {
+                        mProject.getCriteriaMatrix()[i][j].setExpectation(newValue);
+                    }
+                }else{
+                    if (mProject.getCriteriaMatrix()[i][j].getConfidence().equals(oldValue)) {
+                        mProject.getCriteriaMatrix()[i][j].setConfidence(newValue);
+                    }
+                }
+            }
+        }
+    }
 
     private VBox generateConfidenceButtons(){
         Label conf = new Label("Уверенность");

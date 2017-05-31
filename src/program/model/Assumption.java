@@ -41,6 +41,14 @@ public class Assumption implements Serializable {
         return confidence;
     }
 
+    public void setExpectation(TypeOneMF expectation) {
+        this.expectation = expectation;
+    }
+
+    public void setConfidence(TypeOneMF confidence) {
+        this.confidence = confidence;
+    }
+
     TypeOneMF expectation;
     TypeOneMF confidence;
 
