@@ -32,6 +32,15 @@ public class ProjectInfo implements Serializable {
         this.projectPath = projectPath;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(! (obj instanceof ProjectInfo)){
+            return false;
+        }
+        return this.getProjectPath().equals(((ProjectInfo) obj).getProjectPath()) &&
+                this.getProjectTitle().equals(((ProjectInfo) obj).getProjectTitle());
+    }
+
     String projectPath;
     String projectTitle;
 }

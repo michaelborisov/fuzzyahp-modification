@@ -3,6 +3,7 @@ package program.view;
 import ahp.IntervalTypeTwoAhp;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeView;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -270,8 +271,8 @@ public class ProjectSceneView extends Stage {
     private void initCriteriaScene(){
         ScrollPane sPane = new ScrollPane();
         GridPane gridpane = new GridPane();
-        sPane.setStyle("-fx-background-color:#FFF");
-        gridpane.setStyle("-fx-background-color:#FFF");
+        //sPane.setStyle("-fx-background-color:#FFF");
+        //gridpane.setStyle("-fx-background-color:#FFF");
         sPane.setContent(gridpane);
         for (int i = 0; i < mProject.getCriteria().size() + 1; i++) {
             RowConstraints row = new RowConstraints(50);
@@ -351,7 +352,11 @@ public class ProjectSceneView extends Stage {
             }
         }
         gridpane.setGridLinesVisible(true);
-        gridpane.setPadding(new Insets(5, 5, 5, 5));
+        if(mProject.getCriteria().size() <=3 ) {
+            gridpane.setPadding(new Insets(5, 5, 5, 50));
+        }else{
+            gridpane.setPadding(new Insets(5));
+        }
         TextArea tArea = new TextArea();
         String criteriaComment = mProject.getDescriptionMap().get("Критерии");
         if (criteriaComment == null){
@@ -373,13 +378,21 @@ public class ProjectSceneView extends Stage {
         vBox.setSpacing(10);
         vBox.getChildren().addAll(sPane, tArea);
         bPane.setCenter(vBox);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(gridpane.getWidth() > 0) {
+                    ProjectSceneView.this.setWidth(gridpane.getWidth() + 165);
+                }
+            }
+        });
     }
 
     private void initSpecificCriterionScene(int criteriaIndex){
         GridPane gridpane = new GridPane();
         ScrollPane sPane = new ScrollPane();
-        sPane.setStyle("-fx-background-color:#FFF");
-        gridpane.setStyle("-fx-background-color:#FFF");
+        //sPane.setStyle("-fx-background-color:#FFF");
+        //gridpane.setStyle("-fx-background-color:#FFF");
         sPane.setHvalue(0.5);
         sPane.setVvalue(0.5);
         gridpane.setAlignment(Pos.TOP_CENTER);
@@ -504,6 +517,14 @@ public class ProjectSceneView extends Stage {
         vBox.getChildren().addAll(sPane, tArea);
         vBox.setStyle(("-fx-background-color:#FFF"));
         bPane.setCenter(vBox);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(gridpane.getWidth() > 0) {
+                    ProjectSceneView.this.setWidth(gridpane.getWidth() + 165);
+                }
+            }
+        });
     }
 
     private void addMenuItemClick(TreeItem<String> selectedItem,
@@ -584,6 +605,28 @@ public class ProjectSceneView extends Stage {
                 }
                 dialog.setContentText("Пожалуйста, введите название");
 
+                Button mButton = (Button)dialog.getDialogPane().lookupButton(ButtonType.OK);
+                mButton.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        String newName = dialog.getEditor().getText();
+                        if (mProject.getAlternatives().indexOf(newName) != -1 ||
+                                mProject.getCriteria().indexOf(newName) != -1 ||
+                                newName.equals("Критерии") ||
+                                newName.equals("Альтернативы") ||
+                                newName.equals("Цель") ||
+                                newName.equals("Результат")){
+                            event.consume();
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Неправильное название");
+                            alert.setHeaderText("Невозможно добавить элемент с таким именем");
+                            alert.setContentText("Элемент с таким именем уже существует. " +
+                                    "Пожалуйста, введите другое название");
+
+                            alert.showAndWait();
+                        }
+                    }
+                });
                 Optional<String> result = dialog.showAndWait();
                 if (result.isPresent()) {
                     BaseHierarchyEntity toDelete = null;

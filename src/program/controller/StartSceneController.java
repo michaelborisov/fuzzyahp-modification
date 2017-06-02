@@ -158,15 +158,23 @@ public class StartSceneController implements Initializable {
         ProjectInfo pInfo = new ProjectInfo(projectPath, projectTitle);
         String projectInfosPath = String.format(".%s%s", File.separator, "projects.fahpm");
         List<ProjectInfo> projectInfos = readAllProjectInfos(projectInfosPath);
-        projectInfos.add(pInfo);
-        Gson gson = new Gson();
-        try {
-            FileWriter writer = new FileWriter(projectInfosPath);
-            writer.write(gson.toJson(projectInfos));
-            writer.flush();
-            writer.close();
-        }catch (IOException ioEx){
-            ioEx.printStackTrace();
+        boolean alreadyInList = false;
+        for (int i = 0; i < projectInfos.size(); i++) {
+            if(projectInfos.get(i).equals(pInfo)){
+                alreadyInList = true;
+            }
+        }
+        if(!alreadyInList) {
+            projectInfos.add(pInfo);
+            Gson gson = new Gson();
+            try {
+                FileWriter writer = new FileWriter(projectInfosPath);
+                writer.write(gson.toJson(projectInfos));
+                writer.flush();
+                writer.close();
+            } catch (IOException ioEx) {
+                ioEx.printStackTrace();
+            }
         }
     }
 

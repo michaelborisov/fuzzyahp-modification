@@ -16,5 +16,6 @@
     <orderEntry type="library" name="gson-2.3.1" level="project" />
     <orderEntry type="library" name="Juzzy" level="project" />
     <orderEntry type="library" name="Jama-1.0.3" level="project" />
+    <orderEntry type="library" name="easybind-1.0.3" level="project" />
   </component>
 </module>
